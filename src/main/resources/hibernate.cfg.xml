@@ -12,7 +12,9 @@
 
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!--<mapping class="ar.edu.unq.epers.tactics.modelo.Party" /> -->
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.title.Title" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.client.Client" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Review" />
 
     </session-factory>
 </hibernate-configuration>
