@@ -1,5 +1,6 @@
-package unq.edu.ar.GrupoMs12021.Resenia.model
+package unq.edu.ar.GrupoMs12021.Resenia.model.review
 
+import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import javax.persistence.*
 
 @Entity

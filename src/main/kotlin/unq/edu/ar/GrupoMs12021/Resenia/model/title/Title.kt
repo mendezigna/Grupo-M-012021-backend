@@ -1,7 +1,6 @@
-package unq.edu.ar.GrupoMs12021.Resenia.model
+package unq.edu.ar.GrupoMs12021.Resenia.model.title
 
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import java.time.LocalDate
 import javax.persistence.*
 

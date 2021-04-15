@@ -1,4 +1,4 @@
-package unq.edu.ar.GrupoMs12021.Resenia.model
+package unq.edu.ar.GrupoMs12021.Resenia.model.client
 
 import javax.persistence.*
 
