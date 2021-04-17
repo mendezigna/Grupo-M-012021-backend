@@ -10,4 +10,9 @@ class TitleDAO {
         session.save(title)
         return title
     }
+
+    fun get(id: String): Title{
+        val session = HibernateTransactionRunner.currentSession
+        return session.get(Title::class.java, id)
+    }
 }

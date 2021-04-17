@@ -1,28 +1,29 @@
 package unq.edu.ar.GrupoMs12021.Resenia.model.title
 
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
-import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-class Title {
+class Title() {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: String? = null
-    val ttType : TitleType
-    val name : String
-    val startYear: LocalDate
-    val endYear: LocalDate?
-    val runtimeMinutes: Int
-    val genres: String
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null
+
+    @Column(unique = true)
+    var ttId : String? = null
+    var ttType : TitleType? = null
+    var name : String? = null
+    var startYear: Int? = null
+    var endYear: Int? = null
+    var runtimeMinutes: Int? = null
+    var genres: String? = null
 
     @OneToMany(mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var reviews: List<Review> = listOf()
 
-    constructor(ttId: String, ttType: TitleType, name: String, startYear: LocalDate, endYear: LocalDate?, runtimeMinutes: Int, genres: List<Genres>){
-        this.id = ttId
-
+    constructor(ttId: String, ttType: TitleType, name: String, startYear: Int, endYear: Int?, runtimeMinutes: Int, genres: List<Genres>) : this() {
+        this.ttId = ttId
         this.ttType = ttType
         this.name = name
         this.startYear = startYear
@@ -32,6 +33,6 @@ class Title {
     }
 
     fun getGenres(): List<Genres> {
-        return this.genres.split(";").map { Genres.valueOf(it) }
+        return this.genres!!.split(";").map { Genres.valueOf(it) }
     }
 }
