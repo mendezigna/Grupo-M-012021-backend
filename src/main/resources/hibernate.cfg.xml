@@ -13,6 +13,9 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.title.Title" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Employee" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Actor" />
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.client.Client" />
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Review" />
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform" />

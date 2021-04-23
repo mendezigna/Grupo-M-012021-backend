@@ -9,7 +9,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
 @RequestMapping("/title")
 class TitleController(private val titleService: TitleService) {
 
-    @GetMapping("/get/{id}")
+    @GetMapping("{id}")
     fun getTitleByID(@PathVariable id: String): Title {
         return this.titleService.get(id)
     }

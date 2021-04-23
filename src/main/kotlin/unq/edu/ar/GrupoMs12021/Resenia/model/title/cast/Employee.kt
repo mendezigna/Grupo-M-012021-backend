@@ -12,6 +12,9 @@ class Employee() {
     var name : String? = null
     var category : Category? = null
 
+    @ManyToOne
+    val cast : Cast? = null
+
     constructor(name : String = "name", category: Category = Category.WRITER) : this(){
         this.name = name
         this.category = category

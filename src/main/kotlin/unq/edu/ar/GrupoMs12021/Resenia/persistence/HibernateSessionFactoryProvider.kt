@@ -19,6 +19,12 @@ class HibernateSessionFactoryProvider private constructor() {
         val dialect = env.getOrDefault("HIBERNATE_DIALECT", "org.hibernate.dialect.MySQL8Dialect")
         val driver = env.getOrDefault("SQL_DRIVER", "com.mysql.cj.jdbc.Driver")
 
+        /*
+        val url = env.getOrDefault("SQL_URL", "jdbc:h2:mem:reseniadb")
+        val dialect = env.getOrDefault("HIBERNATE_DIALECT", "org.hibernate.dialect.H2Dialect")
+        val driver = env.getOrDefault("SQL_DRIVER", "org.h2.Driver")
+         */
+
         val configuration = Configuration()
         configuration.configure("hibernate.cfg.xml")
         configuration.setProperty("hibernate.connection.username", user)
