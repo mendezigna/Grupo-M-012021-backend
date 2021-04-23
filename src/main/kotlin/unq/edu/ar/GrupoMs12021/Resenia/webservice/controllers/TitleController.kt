@@ -3,6 +3,7 @@ package unq.edu.ar.GrupoMs12021.Resenia.webservice.controllers
 import org.springframework.web.bind.annotation.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 
 @RestController
 @CrossOrigin(origins = ["*"])
@@ -10,7 +11,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
 class TitleController(private val titleService: TitleService) {
 
     @GetMapping("{id}")
-    fun getTitleByID(@PathVariable id: String): Title {
-        return this.titleService.get(id)
+    fun getTitleByID(@PathVariable id: String): TitleDTO {
+        return TitleDTO.fromModel(this.titleService.get(id))
     }
 }
