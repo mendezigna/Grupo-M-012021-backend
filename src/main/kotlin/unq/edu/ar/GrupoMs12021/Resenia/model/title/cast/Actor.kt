@@ -14,7 +14,7 @@ class Actor() {
     private var characters : String = ""
 
     @ManyToOne
-    val cast : Cast? = null
+    var cast : Cast? = null
 
     constructor(name: String = "name", characters: List<String> = listOf()) : this() {
         this.name = name

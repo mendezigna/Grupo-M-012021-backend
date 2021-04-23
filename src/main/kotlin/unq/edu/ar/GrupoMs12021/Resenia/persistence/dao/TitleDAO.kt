@@ -13,6 +13,8 @@ class TitleDAO {
 
     fun get(id: String): Title{
         val session = HibernateTransactionRunner.currentSession
-        return session.createQuery("SELECT * FROM Title t WHERE t.titleId = $id", Title::class.java).singleResult
+        val query = session.createQuery("SELECT t FROM Title t WHERE t.titleId = :pid", Title::class.java)
+        query.setParameter("pid", id)
+        return query.singleResult
     }
 }

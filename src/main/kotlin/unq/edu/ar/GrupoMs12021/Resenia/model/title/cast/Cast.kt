@@ -20,12 +20,21 @@ class Cast() {
     var employees : List<Employee> = listOf()
 
     @OneToOne
-    var title : Title? = null
+    private var title : Title? = null
 
-    constructor(title : Title,director: String = "director", actors: List<Actor> = listOf(), employees: List<Employee> = listOf()) : this(){
-        this.title = title
+    constructor(director: String = "director", actors: List<Actor> = listOf(), employees: List<Employee> = listOf()) : this(){
         this.director = director
         this.actors = actors
         this.employees = employees
+        actors.forEach { actor -> actor.cast = this }
+        employees.forEach { employee -> employee.cast = this }
+    }
+
+    fun setTitle(title : Title){
+        this.title = title
+    }
+
+    fun getTitle() : Title?{
+        return this.title
     }
 }

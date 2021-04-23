@@ -14,6 +14,6 @@ class TitleService(private val titleDAO : TitleDAO) {
     }
 
     fun get(id: String): Title{
-        return titleDAO.get(id)
+        return runTrx {titleDAO.get(id)}
     }
 }

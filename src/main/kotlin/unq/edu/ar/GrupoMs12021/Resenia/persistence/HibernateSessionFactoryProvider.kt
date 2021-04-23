@@ -15,15 +15,16 @@ class HibernateSessionFactoryProvider private constructor() {
         val dataBase = "resenia"
         val host = "localhost"
 
+/*
         val url = env.getOrDefault("SQL_URL", "jdbc:mysql://$host:3306/$dataBase?createDatabaseIfNotExist=true&serverTimezone=UTC")
         val dialect = env.getOrDefault("HIBERNATE_DIALECT", "org.hibernate.dialect.MySQL8Dialect")
         val driver = env.getOrDefault("SQL_DRIVER", "com.mysql.cj.jdbc.Driver")
+*/
 
-        /*
-        val url = env.getOrDefault("SQL_URL", "jdbc:h2:mem:reseniadb")
+        val url = env.getOrDefault("SQL_URL", "jdbc:h2:mem:resenia;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1")
         val dialect = env.getOrDefault("HIBERNATE_DIALECT", "org.hibernate.dialect.H2Dialect")
         val driver = env.getOrDefault("SQL_DRIVER", "org.h2.Driver")
-         */
+
 
         val configuration = Configuration()
         configuration.configure("hibernate.cfg.xml")

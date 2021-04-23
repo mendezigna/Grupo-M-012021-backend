@@ -17,4 +17,5 @@ class AppConfiguration {
     fun titleService(titleDAO: TitleDAO) : TitleService {
         return TitleService(titleDAO)
     }
+
 }

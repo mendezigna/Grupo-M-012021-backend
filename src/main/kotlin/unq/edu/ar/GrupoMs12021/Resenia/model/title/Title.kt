@@ -9,17 +9,12 @@ class Title() {
 
     companion object{
         fun createAnyTitle() : Title{
-            val cast = Cast()
-            val title = Title("tt00000", TitleType.MOVIE, "title", 2000, null,100, listOf(), listOf())
-            title.setCast(cast)
-            return title
+
+            return Title("tt00000",TitleBasicInformation(), listOf(), Cast())
         }
 
         fun createTitleWith(titleId: String = "", titleBasicInformation: TitleBasicInformation = TitleBasicInformation(), reviews: List<Review> = listOf(), cast : Cast = Cast()) : Title{
-            val title = Title(titleId, titleBasicInformation.titleType, titleBasicInformation.name, titleBasicInformation.startYear, titleBasicInformation.endYear, titleBasicInformation.runtimeMinutes, titleBasicInformation.genres, reviews)
-            cast.title = title
-            title.cast = cast
-            return title
+            return Title(titleId, titleBasicInformation, reviews,cast)
         }
 
     }
@@ -31,7 +26,7 @@ class Title() {
     @Column(unique = true)
     var titleId: String? = null
 
-    var titleType : TitleType? = null
+    var titleType : String? = null
     var name : String? = null
     var startYear: Int? = null
     var endYear: Int? = null
@@ -39,20 +34,22 @@ class Title() {
     private var genres: String = ""
 
     @OneToOne(mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
-    private var cast : Cast? = null
+    var cast : Cast? = null
 
     @OneToMany(mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var reviews: List<Review> = listOf()
 
-    constructor(titleId: String, ttType: TitleType, name: String, startYear: Int, endYear: Int?, runtimeMinutes: Int, genres: List<Genres>, reviews: List<Review>) : this() {
+    constructor(titleId: String, titleBasicInformation: TitleBasicInformation, reviews: List<Review>, cast : Cast) : this() {
         this.titleId = titleId
-        this.titleType = ttType
-        this.name = name
-        this.startYear = startYear
-        this.endYear = endYear
-        this.runtimeMinutes = runtimeMinutes
-        setGenres(genres)
+        this.titleType = titleBasicInformation.titleType.name
+        this.name = titleBasicInformation.name
+        this.startYear = titleBasicInformation.startYear
+        this.endYear = titleBasicInformation.endYear
+        this.runtimeMinutes = titleBasicInformation.runtimeMinutes
+        setGenres(titleBasicInformation.genres)
         this.reviews = reviews
+        this.cast = cast
+        cast.setTitle(this)
     }
 
     fun setGenres(genres : List<Genres>){
@@ -61,11 +58,6 @@ class Title() {
 
     fun getGenres(): List<Genres> {
         return this.genres.split(";").map { Genres.valueOf(it) }
-    }
-
-    fun setCast(cast: Cast){
-        cast.title = this
-        this.cast = cast
     }
 
 }
