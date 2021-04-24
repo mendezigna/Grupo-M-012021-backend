@@ -19,6 +19,8 @@
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.client.Client" />
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Review" />
         <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.Like" />
+        <mapping class="unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview" />
 
     </session-factory>
 </hibernate-configuration>
