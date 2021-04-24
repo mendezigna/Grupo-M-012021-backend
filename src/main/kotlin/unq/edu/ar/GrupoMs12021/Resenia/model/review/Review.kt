@@ -8,21 +8,24 @@ import javax.persistence.*
 class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
     @ManyToOne
     var title: Title? = null
-    val overview: String? = null
-    val description: String? = null
-    val rating: Integer? = null
-    val spoiler: Boolean? = null
-    val premium: Boolean? = null
-    val date: Date? = null
-    @ManyToOne
-    val origin: Platform? = null
-    val usrNickname: String? = null
-    val usrLocation: String? = null
-    val usrLanguage: String? = null
+    var overview: String? = null
+    var description: String? = null
+    var rating: Int? = null
+    var spoiler: Boolean? = null
+    var premium: Boolean? = null
+    var date: Date? = null
 
-    constructor(){}
+    @OneToMany
+    var user: UserReview? = null
+    var userNickname: String? = null
+
+    @OneToMany(cascade = [CascadeType.ALL])
+    var reports: List<Report>? = listOf()
+    var liking: Like? = null
+
+    constructor() {}
+
 }
