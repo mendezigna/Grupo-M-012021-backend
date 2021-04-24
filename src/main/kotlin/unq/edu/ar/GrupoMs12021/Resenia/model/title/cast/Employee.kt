@@ -10,14 +10,14 @@ class Employee() {
     var id: Long? = null
 
     var name : String? = null
-    var category : String? = null
+    var category : Category? = null
 
     @ManyToOne
     var cast : Cast? = null
 
     constructor(name : String = "name", category: Category = Category.WRITER) : this(){
         this.name = name
-        this.category = category.name
+        this.category = category
     }
 }
 
