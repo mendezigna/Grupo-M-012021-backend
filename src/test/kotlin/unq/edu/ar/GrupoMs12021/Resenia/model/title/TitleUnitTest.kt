@@ -19,16 +19,16 @@ class TitleUnitTest{
         val genres = listOf(Genres.COMEDY, Genres.SHORT)
         val title = Title.createTitleWith(titleBasicInformation = TitleBasicInformation(genres = genres))
 
-        assertEquals(genres, title.getGeneros())
+        assertEquals(genres, title.getGenres())
     }
 
     @Test
     fun setGenresOfTitleTest(){
         val genres = listOf(Genres.COMEDY, Genres.SHORT)
         val title = Title.createAnyTitle()
-        title.setGeneross(genres)
+        title.setGenres(genres)
 
-        assertEquals(genres, title.getGeneros())
+        assertEquals(genres, title.getGenres())
     }
 
     @Test
@@ -39,7 +39,7 @@ class TitleUnitTest{
         val title = Title.createTitleWith(titleId = "tt000002", titleBasicInformation = titleBasicInformation, reviews = listOf(), cast = cast)
 
         assertEquals(title.titleId, "tt000002")
-        assertEquals(title.titleType, TitleType.MOVIE.name)
+        assertEquals(title.titleType, TitleType.MOVIE)
         assertEquals(title.name, "Title")
         assertEquals(title.startYear, 2000)
         assertEquals(title.runtimeMinutes, 60)

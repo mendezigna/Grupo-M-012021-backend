@@ -12,7 +12,7 @@ class EmployeeTest {
         val employee = Employee(name = "Empleado", category = Category.PRODUCER)
 
         assertEquals(employee.name, "Empleado")
-        assertEquals(employee.category, Category.PRODUCER.name)
+        assertEquals(employee.category, Category.PRODUCER)
     }
 
 }
