@@ -1,18 +1,10 @@
 package unq.edu.ar.GrupoMs12021.Resenia.model.title
 
-import helpers.DataService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Genres
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleBasicInformation
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleType
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Actor
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Category
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Employee
 
 class TitleUnitTest{
 
@@ -27,16 +19,16 @@ class TitleUnitTest{
         val genres = listOf(Genres.COMEDY, Genres.SHORT)
         val title = Title.createTitleWith(titleBasicInformation = TitleBasicInformation(genres = genres))
 
-        assertEquals(genres, title.getGenres())
+        assertEquals(genres, title.getGeneros())
     }
 
     @Test
     fun setGenresOfTitleTest(){
         val genres = listOf(Genres.COMEDY, Genres.SHORT)
         val title = Title.createAnyTitle()
-        title.setGenres(genres)
+        title.setGeneross(genres)
 
-        assertEquals(genres, title.getGenres())
+        assertEquals(genres, title.getGeneros())
     }
 
     @Test
