@@ -1,4 +1,4 @@
-package unq.edu.ar.GrupoMs12021.Resenia.webservice
+package unq.edu.ar.GrupoMs12021.Resenia
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration

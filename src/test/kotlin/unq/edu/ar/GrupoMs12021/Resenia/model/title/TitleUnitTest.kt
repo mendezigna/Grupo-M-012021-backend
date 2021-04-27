@@ -1,18 +1,10 @@
 package unq.edu.ar.GrupoMs12021.Resenia.model.title
 
-import helpers.DataService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Genres
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleBasicInformation
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleType
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Actor
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Category
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Employee
 
 class TitleUnitTest{
 
@@ -47,7 +39,7 @@ class TitleUnitTest{
         val title = Title.createTitleWith(titleId = "tt000002", titleBasicInformation = titleBasicInformation, reviews = listOf(), cast = cast)
 
         assertEquals(title.titleId, "tt000002")
-        assertEquals(title.titleType, TitleType.MOVIE.name)
+        assertEquals(title.titleType, TitleType.MOVIE)
         assertEquals(title.name, "Title")
         assertEquals(title.startYear, 2000)
         assertEquals(title.runtimeMinutes, 60)
