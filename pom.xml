@@ -124,12 +124,14 @@
 				<executions>
 					<execution>
 						<id>pre-unit-test</id>
+						<phase>process-test-classes</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<destFile>${project.build.directory}/coverage-reports/jacoco-ut.xml</destFile>
 							<propertyName>surefireArgLine</propertyName>
+							<destFile>${basedir}/target/coverage-reports/jacoco-ut.xml</destFile>
+							<append>true</append>
 						</configuration>
 					</execution>
 					<execution>
@@ -139,13 +141,19 @@
 							<goal>report</goal>
 						</goals>
 						<configuration>
-							<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.xml</dataFile>
-							<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+							<outputDirectory>${basedir}/target/coverage-reports/</outputDirectory>
+							<dataFile>${basedir}/target/coverage-reports/jacoco-ut.xml</dataFile>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>${surefireArgLine}</argLine>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
