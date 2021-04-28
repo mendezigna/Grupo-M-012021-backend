@@ -17,4 +17,4 @@ deploy:
     app: grupo-m-desapp
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ ^(main|development)$
+      condition: $TRAVIS_BRANCH =~ ^(main|development|heroku-integration)$
