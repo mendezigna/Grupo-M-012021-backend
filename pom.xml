@@ -130,7 +130,6 @@
 						</goals>
 						<configuration>
 							<propertyName>surefireArgLine</propertyName>
-							<destFile>${basedir}/target/coverage-reports/jacoco-ut.xml</destFile>
 							<append>true</append>
 						</configuration>
 					</execution>
@@ -140,10 +139,6 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/coverage-reports/</outputDirectory>
-							<dataFile>${basedir}/target/coverage-reports/jacoco-ut.xml</dataFile>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
