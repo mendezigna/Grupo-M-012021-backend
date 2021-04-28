@@ -9,3 +9,9 @@ before_install:
 
 after_success:
   - bash <(curl -Ls https://coverage.codacy.com/get.sh) report -l Kotlin --force-language -r target/site/jacoco/jacoco.xml
+
+deploy:
+  - provider: heroku
+    skip_cleanup: true
+    api_key: 7ac92cf7-17e6-4d88-8a8f-2a14990038e9
+    app: grupo-m-desapp
