@@ -7,4 +7,5 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 @Repository
 interface ReviewDAO : CrudRepository<Review,Long> {
 
+    fun findReviewsByTitleTitleId (titleId: String): List<Review>;
 }

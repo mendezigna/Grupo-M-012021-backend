@@ -17,13 +17,18 @@ class UserReview {
     @OneToMany
     var reviews: List<Review>? = listOf()
 
-    constructor(platform: Platform, platformID: String, nicknames:String, location: String , language: String, reviews: List<Review>? = listOf() ){
+    constructor(){}
+    constructor(platform: Platform, platformID: String, nicknames:String, location: String?="" , language: String?="", reviews: List<Review>? = listOf() ){
         this.platform = platform
         this.platformID = platformID
         this.nicknames = nicknames
         this.location = location
         this.language = language
         this.reviews = reviews
+    }
+
+    fun addReview(review: Review) {
+        this.reviews = reviews?.plus(review)
     }
 
 }
