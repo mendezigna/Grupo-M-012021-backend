@@ -21,10 +21,6 @@ import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.*
 @Service
 class DataService(private val titleDAO: TitleDAO,
                   private val reviewDAO: ReviewDAO,
-                  private val clientDAO: ClientDAO,
-                  private val userDAO: UserReviewDAO,
-                  private val likingDAO: LikingDAO,
-                  private val reportDAO: ReportDAO
 ) : ApplicationRunner {
 
     val cast1 = Cast("Steven Spielberg", listOf(Actor("Carmencita", listOf("Carmencita"))), listOf(Employee("Jose", Category.CINEMATOGRAPHER)))
@@ -79,11 +75,7 @@ class DataService(private val titleDAO: TitleDAO,
     val title24: Title = Title.createTitleWith("tt0000024", TitleBasicInformation(TitleType.TVSERIES, "Diego al 100%", 1984, 1985, 0, listOf(Genres.COMEDY)), listOf(), cast24)
     val title25: Title = Title.createTitleWith("tt0000025", TitleBasicInformation(TitleType.TVSERIES, "The Comedy Game", 1971, 1973, 30, listOf(Genres.COMEDY)), listOf(), cast25)
 
-    var client1: Client = Client("Nombre Cliente1", "email1@example.com",  "miPassword","1sdfasdf1234asdf");
-    var client2: Client = Client("Nombre Cliente2", "email2@example.com",  "miPassword","2sdfasdf1234asdf");
-    var client3: Client = Client("Nombre Cliente3", "email3@example.com", "miPassword","3sdfasdf1234asdf");
-
-    final val user1: UserReview = UserReview(Platform.Netflix,"juan_yoPago@example.com","Juan","Buenos Aires, Argentina","spanish")
+    final var user1: UserReview = UserReview(Platform.Netflix,"juan_yoPago@example.com","Juan","Buenos Aires, Argentina","spanish")
     final var user2: UserReview = UserReview(Platform.AmazonPrime,"juan_yoPago@example.com","Juan","Buenos Aires, Argentina","spanish")
     final var user3: UserReview = UserReview(Platform.DisneyPlus,"juan_yoPago@example.com","Juan Jr","Buenos Aires, Argentina","spanish")
     final var user4: UserReview = UserReview(Platform.HBOPlus,"juan_yoPago@example.com","Juancito","Buenos Aires, Argentina","spanish")
@@ -94,10 +86,21 @@ class DataService(private val titleDAO: TitleDAO,
     var rev2: Review = Review(title2, "The worst", "Some bad description", 1, false, user1,"Juan")
     var rev3: Review = Review(title3, "Okay...", "Some ok description", 3, false, user2,"Juan")
     var rev4: Review = Review(title4, "Good", "Some good description", 4, false, user3,"Juan Jr")
-    var rev5: Review = Review(title4, "Good", "Some goood description", 4, false, user4,"Juancito")
+    var rev5: Review = Review(title4, "Good", "Some goood description", 3, false, user4,"Juancito")
+
+    fun setUp(){
+        user1.addReview(rev1)
+        user1.addReview(rev2)
+        user2.addReview(rev3)
+        user3.addReview(rev4)
+        user4.addReview(rev5)
+    }
 
     override fun run(args: ApplicationArguments?) {
+        setUp()
         val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25)
         titleDAO.saveAll(titles)
+        reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5))
+
     }
 }
