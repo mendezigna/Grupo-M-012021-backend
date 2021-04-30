@@ -8,7 +8,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Category
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Employee
 
-data class TitleDTO(val titleId : String, val titleType: TitleType, val name : String, val runTimeMinutes: Int, val startYear : Int, val endYear : Int?, val genres : List<Genres>, val cast : CastDTO){
+data class TitleDTO(val titleId : String, val titleType: TitleType, val name : String, val runTimeMinutes: Int, val startYear : Int, val endYear : Int?, val genres : List<Genres>, val cast : CastDTO?){
 
     companion object {
 
