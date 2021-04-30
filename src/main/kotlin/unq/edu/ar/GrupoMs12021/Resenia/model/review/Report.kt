@@ -13,6 +13,13 @@ class Report {
     @ManyToOne
     var review: Review? = null
     @ManyToOne
-    var client: Client? = null
+    var user: UserReview? = null
+
+    constructor(){}
+    constructor(review: Review, user: UserReview, reason: String, ){
+        this.review = review
+        this.reason = reason
+        this.user = user
+    }
 
 }
