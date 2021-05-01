@@ -60,6 +60,10 @@ class Title() {
         return this.genres.split(";").map { Genres.valueOf(it) }
     }
 
+    fun addReview(review: Review) {
+        this.reviews = reviews.plus(review)
+    }
+
 }
 
 class TitleBasicInformation(val titleType: TitleType = TitleType.MOVIE, val name: String = "title", val startYear: Int = 2000, val endYear: Int? = null, val runtimeMinutes: Int = 100, val genres: List<Genres> = listOf())

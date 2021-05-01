@@ -3,7 +3,6 @@ package unq.edu.ar.GrupoMs12021.Resenia.service
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Service
-import unq.edu.ar.GrupoMs12021.Resenia.model.client.Client
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview

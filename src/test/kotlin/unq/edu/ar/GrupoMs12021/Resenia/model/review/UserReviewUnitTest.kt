@@ -25,6 +25,21 @@ class UserReviewUnitTest {
     }
 
     @Test
+    fun userCanMatchsUser() {
+        val netflix = Platform.Netflix
+        val netflixUserId ="juan@example.com"
+        val nickname = "Juan"
+        val location = "Bs As, Argentina"
+        val user1 = UserReview(netflix,netflixUserId,nickname, location, "Spanish", emptyList())
+
+        val userDoesntMatch = UserReview()
+        val userMatchs = UserReview(netflix,netflixUserId,nickname, location, "Spanish", emptyList())
+
+        Assertions.assertTrue(user1.match(userMatchs))
+        Assertions.assertFalse(user1.match(userDoesntMatch))
+    }
+
+    @Test
     fun userMakesReviewTest() {
         val netflix = Platform.Netflix
         val netflixUserId ="juan@example.com"

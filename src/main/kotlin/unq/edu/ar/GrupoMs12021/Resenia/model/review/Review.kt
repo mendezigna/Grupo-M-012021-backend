@@ -31,7 +31,7 @@ class Review {
     var liking: Liking? = null
 
     constructor() {}
-    constructor(title:Title, overview:String, description:String, rating: Int, premium:Boolean? = false, user: UserReview, userNickname:String,
+    constructor(title: Title?, overview:String, description:String, rating: Int, premium:Boolean? = false, user: UserReview, userNickname:String,
                 spoiler:Boolean? = false, date:Date? = Date(), liking:Liking? = Liking(), reports:List<Report>? = listOf() ) {
         this.title = title
         this.rating = rating
@@ -52,12 +52,20 @@ class Review {
         return report
     }
 
-    fun addLike(user: UserReview) {
-        this.liking?.doLike(user)
+    fun addLiking(user: UserReview, isLike: Boolean) {
+        if (!this.liking!!.userLiked(user)) {
+            this.liking!!.addUserLike(user, isLike)
+        }
     }
 
-    fun addDislike(user: UserReview) {
-        this.liking?.doDislike(user)
+    fun setUserReview(user: UserReview) {
+        this.user = user
+        user.addReview(this)
+    }
+
+    fun setTitleReview(title: Title) {
+        this.title = title
+        title.addReview(this)
     }
 
 }

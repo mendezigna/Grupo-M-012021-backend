@@ -2,23 +2,38 @@ package unq.edu.ar.GrupoMs12021.Resenia.service
 
 import org.springframework.stereotype.Service
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview
+import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ReviewDAO
 import java.util.*
 
 @Service
-class ReviewService(private val dao: ReviewDAO) {
+class ReviewService(private val reviewDAO: ReviewDAO) {
 
     fun getAll(): List<Review> {
-        return dao.findAll().toList()
+        return reviewDAO.findAll().toList()
     }
 
-    fun getById(id: String): Review {
-        return this.dao.findById(id.toLong()).get()
+    fun getById(id: Long): Review {
+        val found: Optional<Review> = this.reviewDAO.findById(id)
+        if (found.isEmpty) {
+            throw Exception(String.format("Review not found id:[%s]", id))
+        }
+        return found.get()
     }
 
     fun getByTitleId(titleId: String): List<Review> {
-        var res = this.dao.findReviewsByTitleTitleId(titleId)
-        var a = res.size
-        return res
+        return this.reviewDAO.findReviewsByTitleTitleId(titleId)
+    }
+
+    fun addLiking(review: Review, user: UserReview, isLike: Boolean): Review {
+        review.addLiking(user, isLike)
+        return this.reviewDAO.save(review)
+    }
+
+    fun save(review: Review, title: Title, user: UserReview): Review {
+        review.setUserReview(user)
+        review.setTitleReview(title)
+        return this.reviewDAO.save(review)
     }
 }

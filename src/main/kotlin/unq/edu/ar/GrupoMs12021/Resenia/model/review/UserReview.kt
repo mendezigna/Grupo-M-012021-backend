@@ -31,4 +31,10 @@ class UserReview {
         this.reviews = reviews?.plus(review)
     }
 
+    fun match(user: UserReview): Boolean {
+        return platformID == user.platformID &&
+                platform == user.platform &&
+                nicknames!!.contains(user.nicknames!!)
+    }
+
 }

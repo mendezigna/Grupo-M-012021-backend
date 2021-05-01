@@ -15,7 +15,6 @@ class Report {
     @ManyToOne
     var user: UserReview? = null
 
-    constructor(){}
     constructor(review: Review, user: UserReview, reason: String, ){
         this.review = review
         this.reason = reason

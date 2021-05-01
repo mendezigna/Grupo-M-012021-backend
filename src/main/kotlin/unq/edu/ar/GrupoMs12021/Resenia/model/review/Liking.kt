@@ -24,18 +24,17 @@ class Liking {
         this.users = users
     }
 
-    fun doLike(user: UserReview){
-        addUser(user)
-        likes = likes?.inc()
-    }
-
-    fun doDislike(user: UserReview){
-        addUser(user)
-        dislikes = dislikes?.inc()
-    }
-
-    private fun addUser(user: UserReview) {
+    fun addUserLike(user: UserReview, isLike:Boolean) {
+        if (isLike){
+            likes = likes?.inc()
+        }else{
+            dislikes = dislikes?.inc()
+        }
         this.users = users?.plus(user)
+    }
+
+    fun userLiked(user: UserReview): Boolean {
+        return this.users!!.any{ usr -> usr.match(user) }
     }
 
 }
