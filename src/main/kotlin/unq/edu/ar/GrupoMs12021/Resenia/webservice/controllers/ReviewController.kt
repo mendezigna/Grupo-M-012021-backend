@@ -12,8 +12,8 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 class ReviewController(private val reviewService: ReviewService) {
 
     @GetMapping()
-    fun getAll(): List<Review> {
-        return this.reviewService.getAll()//TitleDTO.fromModel(this.reviewService.getById(id))
+    fun getAll(): List<ReviewDTO> {
+        return ReviewDTO.fromModel(this.reviewService.getAll())
     }
 
     @GetMapping("{id}")
