@@ -18,11 +18,7 @@ data class ReviewDTO(val id: Long, val titleID: String, val overview: String?, v
         }
 
         fun fromService(dto: ReviewDTO): Review {
-            var entity = Review(null, dto.overview!!, dto.description!!, dto.rating!!, dto.premium, UserReviewDTO.fromService(dto.user!!), dto.spoiler, dto.date)
-            dto.id ?: run {
-                entity.id = dto.id
-            }
-            return entity
+            return Review(null, dto.overview!!, dto.description!!, dto.rating!!, dto.premium, UserReviewDTO.fromService(dto.user!!), dto.spoiler, dto.date)
         }
     }
 }

@@ -38,7 +38,7 @@ class ReviewsUnitTest {
 
     @Test
     fun addOneReportTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
+        val review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
         val initialReportsAmount = review.reports?.size
 
         review.addReport("reason")
@@ -56,7 +56,7 @@ class ReviewsUnitTest {
 
     @Test
     fun addLikeOnNewReviewTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
+        val review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
 
         val likeIt = true
         review.addLike(likeIt)
@@ -66,11 +66,9 @@ class ReviewsUnitTest {
 
     @Test
     fun addDislikeReviewTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
-
-        val userDislikes = UserReview(Platform.Netflix,"pablo@example.com","Pablo")
+        val review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
         val dislikeIt = false
-        review!!.addLike(dislikeIt)
+        review.addLike(dislikeIt)
 
         Assertions.assertEquals(1,review.dislikes)
     }

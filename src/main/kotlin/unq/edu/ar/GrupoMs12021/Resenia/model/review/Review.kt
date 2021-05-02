@@ -46,7 +46,7 @@ class Review {
     }
 
     fun addReport(reason: String): Report {
-        var report = Report(this, reason)
+        val report = Report(this, reason)
         this.reports = this.reports!!.plus(report)
         return report
     }
@@ -61,7 +61,7 @@ class Review {
 
     fun setTitleReview(title: Title) {
         this.title = title
-        title?.addReview(this)
+        title.addReview(this)
     }
 
 }

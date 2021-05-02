@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
 
 class TitleUnitTest{
@@ -46,5 +47,16 @@ class TitleUnitTest{
 
         assertEquals(title.cast, cast)
         assertTrue(title.reviews.isEmpty())
+    }
+
+    @Test
+    fun addReviewTest(){
+        val title = Title.createAnyTitle()
+        val review = Review()
+
+        title.addReview(review)
+
+        assertEquals(title.reviews[0], review)
+        assertEquals(title.reviews.size, 1)
     }
 }
