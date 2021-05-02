@@ -81,18 +81,13 @@ class DataService(private val titleDAO: TitleDAO,
     final var user5: UserReview = UserReview(Platform.Netflix,"pablo.campeon@example.com","Pablito","Salta, Argentina","spanish")
 
 
-    var rev1: Review = Review(title1, "Excellent", "Some good description", 5, false, user1,"Juan")
-    var rev2: Review = Review(title2, "The worst", "Some bad description", 1, false, user1,"Juan")
-    var rev3: Review = Review(title3, "Okay...", "Some ok description", 3, false, user2,"Juan")
-    var rev4: Review = Review(title4, "Good", "Some good description", 4, false, user3,"Juan Jr")
-    var rev5: Review = Review(title4, "Good", "Some goood description", 3, false, user4,"Juancito")
+    var rev1: Review = Review(title1, "Excellent", "Some good description", 5, false, user1)
+    var rev2: Review = Review(title2, "The worst", "Some bad description", 1, false, user1)
+    var rev3: Review = Review(title3, "Okay...", "Some ok description", 3, false, user2)
+    var rev4: Review = Review(title4, "Good", "Some good description", 4, false, user3)
+    var rev5: Review = Review(title4, "Good", "Some goood description", 3, false, user4)
 
     fun setUp(){
-        user1.addReview(rev1)
-        user1.addReview(rev2)
-        user2.addReview(rev3)
-        user3.addReview(rev4)
-        user4.addReview(rev5)
     }
 
     override fun run(args: ApplicationArguments?) {

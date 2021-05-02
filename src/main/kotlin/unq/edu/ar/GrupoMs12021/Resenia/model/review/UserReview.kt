@@ -14,27 +14,14 @@ class UserReview {
     var nicknames: String? = null
     var location: String? = null
     var language: String? = null
-    @OneToMany
-    var reviews: List<Review>? = listOf()
 
     constructor(){}
-    constructor(platform: Platform, platformID: String, nicknames:String, location: String?="" , language: String?="", reviews: List<Review>? = listOf() ){
+    constructor(platform: Platform, platformID: String, nicknames:String, location: String?="" , language: String?=""){
         this.platform = platform
         this.platformID = platformID
         this.nicknames = nicknames
         this.location = location
         this.language = language
-        this.reviews = reviews
-    }
-
-    fun addReview(review: Review) {
-        this.reviews = reviews?.plus(review)
-    }
-
-    fun match(user: UserReview): Boolean {
-        return platformID == user.platformID &&
-                platform == user.platform &&
-                nicknames!!.contains(user.nicknames!!)
     }
 
 }

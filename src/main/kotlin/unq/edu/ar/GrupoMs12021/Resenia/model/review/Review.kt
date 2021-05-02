@@ -22,50 +22,46 @@ class Review {
 
     @ManyToOne(cascade = [CascadeType.ALL])
     var user: UserReview? = null
-    var userNickname: String? = null
 
     @OneToMany(cascade = [CascadeType.ALL])
     var reports: List<Report>? = listOf()
 
-    @OneToOne(cascade = [CascadeType.ALL])
-    var liking: Liking? = null
+    var likes: Int? = 0
+    var dislikes: Int? = 0
 
     constructor() {}
-    constructor(title: Title?, overview:String, description:String, rating: Int, premium:Boolean? = false, user: UserReview, userNickname:String,
-                spoiler:Boolean? = false, date:Date? = Date(), liking:Liking? = Liking(), reports:List<Report>? = listOf() ) {
-        this.title = title
+    constructor(title: Title?, overview: String, description: String, rating: Int, premium: Boolean? = false, user: UserReview,
+                spoiler: Boolean? = false, date: Date? = Date(), reports: List<Report>? = listOf(), likes: Int? = 0, dislikes: Int? = 0) {
+        title?.let { this.setTitleReview(it) }
         this.rating = rating
         this.user = user
-        this.userNickname = userNickname
         this.date = date
         this.description = description
         this.overview = overview
         this.premium = premium
         this.spoiler = spoiler
         this.reports = reports
-        this.liking = liking
+        this.likes = likes
+        this.dislikes = dislikes
     }
 
-    fun addReport(user: UserReview, reason: String): Report {
-        var report = Report(this,user, reason)
+    fun addReport(reason: String): Report {
+        var report = Report(this, reason)
         this.reports = this.reports!!.plus(report)
         return report
     }
 
-    fun addLiking(user: UserReview, isLike: Boolean) {
-        if (!this.liking!!.userLiked(user)) {
-            this.liking!!.addUserLike(user, isLike)
+    fun addLike(isLike: Boolean) {
+        if (isLike) {
+            likes = likes?.inc()
+        } else {
+            dislikes = dislikes?.inc()
         }
-    }
-
-    fun setUserReview(user: UserReview) {
-        this.user = user
-        user.addReview(this)
     }
 
     fun setTitleReview(title: Title) {
         this.title = title
-        title.addReview(this)
+        title?.addReview(this)
     }
 
 }

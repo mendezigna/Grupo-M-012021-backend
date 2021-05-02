@@ -12,13 +12,10 @@ class Report {
     var reason: String? = null
     @ManyToOne
     var review: Review? = null
-    @ManyToOne
-    var user: UserReview? = null
 
-    constructor(review: Review, user: UserReview, reason: String, ){
+    constructor(review: Review, reason: String, ){
         this.review = review
         this.reason = reason
-        this.user = user
     }
 
 }

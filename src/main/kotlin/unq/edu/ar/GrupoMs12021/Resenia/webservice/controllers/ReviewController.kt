@@ -7,9 +7,9 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.service.ReviewService
 import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
 import unq.edu.ar.GrupoMs12021.Resenia.service.UserReviewService
-import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.LikingDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.UserReviewDTO
+import java.util.*
 
 @RestController
 @CrossOrigin(origins = ["*"])
@@ -29,22 +29,16 @@ class ReviewController(private val reviewService: ReviewService,
         return ReviewDTO.fromModel(this.reviewService.getById(id))
     }
 
-    @GetMapping("/{id}/likes")
-    fun getLikes(@PathVariable id: Long): LikingDTO {
-        return LikingDTO.fromModel(this.reviewService.getById(id).liking!!)
+    @PostMapping("/{id}/like")
+    fun likeReview(@PathVariable id: Long): ReviewDTO {
+        var review: Review = reviewService.getById(id)
+        return ReviewDTO.fromModel(this.reviewService.addLiking(review, true))
     }
 
-    @PostMapping("/{id}/likes/like")
-    fun likeReview(@PathVariable id: Long, @RequestBody userdto: UserReviewDTO) {
+    @PostMapping("/{id}/dislike")
+    fun dislikeReview(@PathVariable id: Long): ReviewDTO {
         var review: Review = reviewService.getById(id)
-        this.reviewService.addLiking(review, UserReviewDTO.fromService(userdto), true)
-    }
-
-    @PostMapping("/{id}/likes/dislike")
-    fun dislikeReview(@PathVariable id: Long, @RequestBody userdto: UserReviewDTO) {
-        var review: Review = reviewService.getById(id)
-        var user = userService.getByIdPlatform(userdto.platform!!, userdto.platformID!!, userdto.nicknames!!)
-        this.reviewService.addLiking(review, user, false)
+        return ReviewDTO.fromModel(this.reviewService.addLiking(review, false))
     }
 
     @GetMapping("/title/{titleId}")
@@ -55,9 +49,13 @@ class ReviewController(private val reviewService: ReviewService,
     @PostMapping("/title/{titleId}")
     fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewDTO): ReviewDTO {
         var title: Title = titleService.get(titleId)
-        var user: UserReview = this.userService.getByIdPlatform(reviewDTO.user?.platform!!, reviewDTO.user!!.platformID!!, reviewDTO.userNickname!!)
-        var review: Review = ReviewDTO.fromService(reviewDTO)
+        var userFound: Optional<UserReview> = this.userService.getByIdPlatform(reviewDTO.user?.platform!!, reviewDTO.user.platformID!!,reviewDTO.user.nicknames!!)
+        var user: UserReview = if (userFound.isEmpty) {
+            this.userService.save(UserReviewDTO.fromService(reviewDTO.user))
+        } else {
+            userFound.get()
+        }
 
-        return ReviewDTO.fromModel(this.reviewService.save(review, title, user))
+        return ReviewDTO.fromModel(this.reviewService.save(ReviewDTO.fromService(reviewDTO), title, user))
     }
 }

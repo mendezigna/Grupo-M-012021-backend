@@ -18,10 +18,9 @@ class ReviewsUnitTest {
         val isPremium = false
 
         val review = Review(title = t1, overview = overview, description = description, rating = 1, date =date,
-                user = user1, userNickname ="Juan", spoiler = isSpoiler, premium = isPremium)
+                user = user1, spoiler = isSpoiler, premium = isPremium)
 
         Assertions.assertEquals(user1, review.user)
-        Assertions.assertEquals("Juan", review.userNickname)
         Assertions.assertEquals(1, review.rating)
         Assertions.assertEquals(overview, review.overview)
         Assertions.assertEquals(date, review.date)
@@ -39,42 +38,41 @@ class ReviewsUnitTest {
 
     @Test
     fun addOneReportTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview(), userNickname ="Juan")
+        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
         val initialReportsAmount = review.reports?.size
 
-        review.addReport(UserReview(),"reason")
+        review.addReport("reason")
 
         Assertions.assertTrue( initialReportsAmount!! < review.reports?.size!!)
     }
 
     @Test
     fun noLikesOnNewReviewTest(){
-        val review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview(), userNickname ="Juan")
+        val review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
 
-        Assertions.assertEquals( 0, review.liking?.likes )
-        Assertions.assertEquals( 0, review.liking?.dislikes )
+        Assertions.assertEquals( 0, review.likes )
+        Assertions.assertEquals( 0, review.dislikes )
     }
 
     @Test
     fun addLikeOnNewReviewTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview(), userNickname ="Juan")
+        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
 
-        val userLikesIt = UserReview(Platform.Netflix,"pablo@example.com","Pablo")
         val likeIt = true
-        review.addLiking(userLikesIt, likeIt)
+        review.addLike(likeIt)
 
-        Assertions.assertEquals(1,review.liking?.likes)
+        Assertions.assertEquals(1,review.likes)
     }
 
     @Test
     fun addDislikeReviewTest(){
-        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview(), userNickname ="Juan")
+        var review = Review(title = Title(), overview = "overview", description = "description", rating = 1, user = UserReview())
 
         val userDislikes = UserReview(Platform.Netflix,"pablo@example.com","Pablo")
         val dislikeIt = false
-        review!!.addLiking(userDislikes, dislikeIt)
+        review!!.addLike(dislikeIt)
 
-        Assertions.assertEquals(1,review.liking?.dislikes)
+        Assertions.assertEquals(1,review.dislikes)
     }
 
 }

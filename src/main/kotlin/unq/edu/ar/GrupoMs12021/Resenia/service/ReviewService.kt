@@ -26,13 +26,13 @@ class ReviewService(private val reviewDAO: ReviewDAO) {
         return this.reviewDAO.findReviewsByTitleTitleId(titleId)
     }
 
-    fun addLiking(review: Review, user: UserReview, isLike: Boolean): Review {
-        review.addLiking(user, isLike)
+    fun addLiking(review: Review, isLike: Boolean): Review {
+        review.addLike(isLike)
         return this.reviewDAO.save(review)
     }
 
     fun save(review: Review, title: Title, user: UserReview): Review {
-        review.setUserReview(user)
+        review.user = user
         review.setTitleReview(title)
         return this.reviewDAO.save(review)
     }
