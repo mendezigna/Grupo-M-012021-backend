@@ -1,0 +1,14 @@
+---------------------------------------------------------------------
+TAG Entrega1v1.0
+---------------------------------------------------------------------
+
+NEW FEATURES:
+* Agregar una reseña
+* Valorar una reseña
+* Buscar reseñas de una pelicula (version simple sin filtros)
+
+NOTES:
+-
+
+KNOWN ISSUES:
+-
