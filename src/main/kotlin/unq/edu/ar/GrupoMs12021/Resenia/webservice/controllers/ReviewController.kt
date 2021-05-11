@@ -14,10 +14,7 @@ import java.util.*
 @RestController
 @CrossOrigin(origins = ["*"])
 @RequestMapping("/review")
-class ReviewController(private val reviewService: ReviewService,
-                       private val userService: UserReviewService,
-                       private val titleService: TitleService
-) {
+class ReviewController(private val reviewService: ReviewService) {
 
     @GetMapping()
     fun getAll(): List<ReviewDTO> {
@@ -31,14 +28,12 @@ class ReviewController(private val reviewService: ReviewService,
 
     @PostMapping("/{id}/like")
     fun likeReview(@PathVariable id: Long): ReviewDTO {
-        var review: Review = reviewService.getById(id)
-        return ReviewDTO.fromModel(this.reviewService.addLiking(review, true))
+        return ReviewDTO.fromModel(this.reviewService.addLiking(id, true))
     }
 
     @PostMapping("/{id}/dislike")
     fun dislikeReview(@PathVariable id: Long): ReviewDTO {
-        var review: Review = reviewService.getById(id)
-        return ReviewDTO.fromModel(this.reviewService.addLiking(review, false))
+        return ReviewDTO.fromModel(this.reviewService.addLiking(id, false))
     }
 
     @GetMapping("/title/{titleId}")
@@ -48,14 +43,6 @@ class ReviewController(private val reviewService: ReviewService,
 
     @PostMapping("/title/{titleId}")
     fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewDTO): ReviewDTO {
-        var title: Title = titleService.get(titleId)
-        var userFound: Optional<UserReview> = this.userService.getByIdPlatform(reviewDTO.user?.platform!!, reviewDTO.user.platformID!!,reviewDTO.user.nicknames!!)
-        var user: UserReview = if (userFound.isEmpty) {
-            this.userService.save(UserReviewDTO.fromService(reviewDTO.user))
-        } else {
-            userFound.get()
-        }
-
-        return ReviewDTO.fromModel(this.reviewService.save(ReviewDTO.fromService(reviewDTO), title, user))
+        return ReviewDTO.fromModel(this.reviewService.create(ReviewDTO.fromService(reviewDTO), titleId))
     }
 }
