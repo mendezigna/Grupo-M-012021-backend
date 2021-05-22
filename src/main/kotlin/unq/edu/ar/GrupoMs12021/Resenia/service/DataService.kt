@@ -1,8 +1,10 @@
 package unq.edu.ar.GrupoMs12021.Resenia.service
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Service
+import unq.edu.ar.GrupoMs12021.Resenia.model.client.Client
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview
@@ -18,8 +20,9 @@ import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.*
 
 
 @Service
-class DataService(private val titleDAO: TitleDAO,
-                  private val reviewDAO: ReviewDAO,
+class DataService(@Autowired private val titleDAO: TitleDAO,
+                  @Autowired private val reviewDAO: ReviewDAO,
+                  @Autowired private val clientDAO: ClientDAO
 ) : ApplicationRunner {
 
     val cast1 = Cast("Steven Spielberg", listOf(Actor("Carmencita", listOf("Carmencita"))), listOf(Employee("Jose", Category.CINEMATOGRAPHER)))
@@ -87,11 +90,14 @@ class DataService(private val titleDAO: TitleDAO,
     var rev4: Review = Review(title4, "Good", "Some good description", 4, false, user3)
     var rev5: Review = Review(title4, "Good", "Some goood description", 3, false, user4)
 
+    val client1 = Client("Netflix", "netflix@company.com", "netflixsecuritypassword123", "ApiKey1234")
+
     fun setUp(){
     }
 
     override fun run(args: ApplicationArguments?) {
         setUp()
+        clientDAO.save(client1)
         val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25)
         titleDAO.saveAll(titles)
         reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5))
