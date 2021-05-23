@@ -7,8 +7,8 @@ class Client() {
 
     var name : String? = null
     @Column(unique = true)
-    lateinit var email: String
-    lateinit var password: String
+    var email: String? = null
+    var password: String? = null
     @Column(unique = true)
     var apyKey : String? = null
 

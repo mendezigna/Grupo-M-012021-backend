@@ -2,10 +2,8 @@ package unq.edu.ar.GrupoMs12021.Resenia.webservice.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
-import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
 import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
-import unq.edu.ar.GrupoMs12021.Resenia.service.aspects.ApiKey
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 
 @RestController

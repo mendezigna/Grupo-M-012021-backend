@@ -19,4 +19,9 @@ class ClientController(@Autowired private val clientService: ClientService) {
     fun register(@RequestBody user : Client) : Client{
         return clientService.register(user)
     }
+
+    @GetMapping("/test")
+    fun test() : String {
+        return "Test"
+    }
 }

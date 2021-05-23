@@ -1,16 +1,9 @@
 package unq.edu.ar.GrupoMs12021.Resenia.webservice.controllers
 
 import org.springframework.web.bind.annotation.*
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview
-import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.service.ReviewService
-import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
-import unq.edu.ar.GrupoMs12021.Resenia.service.UserReviewService
-import unq.edu.ar.GrupoMs12021.Resenia.service.aspects.ApiKey
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewDTO
-import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.UserReviewDTO
-import java.util.*
 
 @RestController
 @CrossOrigin(origins = ["*"])

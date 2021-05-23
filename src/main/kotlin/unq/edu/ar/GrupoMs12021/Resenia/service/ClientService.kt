@@ -12,7 +12,7 @@ class ClientService(@Autowired private val clientDAO : ClientDAO) {
     private val STRINGLENGTH = 10;
 
     fun login(user : Client) : Client{
-        return clientDAO.findByEmailAndPassword(user.email, user.password)
+        return clientDAO.findByEmailAndPassword(user.email!!, user.password!!)
     }
 
     fun register(user : Client) : Client{

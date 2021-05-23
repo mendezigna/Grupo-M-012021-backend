@@ -16,11 +16,17 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.cors()
             .and()
+            .csrf().disable()
             .authorizeRequests()
-            .antMatchers(HttpMethod.POST,  "/client/login", "/client/register", "/review/**", "/title/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/review/**", "/title/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/review/**", "/title/**")
+            .permitAll()
+            .antMatchers(HttpMethod.POST,  "/client/login/**", "/client/register/**", "/review/**", "/title/**")
+            .permitAll()
             .anyRequest()
             .authenticated()
+            .and()
+            .oauth2ResourceServer()
+            .jwt()
     }
 
 }
