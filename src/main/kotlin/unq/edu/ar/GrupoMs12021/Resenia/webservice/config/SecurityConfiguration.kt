@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 
 @Configuration
@@ -13,10 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
+
     override fun configure(http: HttpSecurity) {
         http.cors()
             .and()
             .csrf().disable()
+            .addFilterAfter(JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)
             .authorizeRequests()
             .antMatchers(HttpMethod.GET, "/review/**", "/title/**")
             .permitAll()
@@ -24,9 +27,6 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .permitAll()
             .anyRequest()
             .authenticated()
-            .and()
-            .oauth2ResourceServer()
-            .jwt()
     }
 
 }
