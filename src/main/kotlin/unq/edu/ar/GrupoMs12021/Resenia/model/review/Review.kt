@@ -5,50 +5,38 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-class Review {
+open class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    open var id: Long? = null
 
     @ManyToOne
-    var title: Title? = null
-    var overview: String? = null
-    var description: String? = null
-    var rating: Int? = null
-    var spoiler: Boolean? = null
-    var premium: Boolean? = null
-    var date: Date? = null
-
-    @ManyToOne(cascade = [CascadeType.ALL])
-    var user: UserReview? = null
-
-    @OneToMany(cascade = [CascadeType.ALL])
-    var reports: List<Report>? = listOf()
-
-    var likes: Int? = 0
-    var dislikes: Int? = 0
+    open var title: Title? = null
+    open var overview: String? = null
+    open var description: String? = null
+    open var rating: Int? = null
+    open var date: Date? = null
+    open var likes: Int? = 0
+    open var dislikes: Int? = 0
+    open var platform: Platform? = null
+    open var platformID: String? = null
+    open var language: String? = null
 
     constructor() {}
-    constructor(title: Title?, overview: String, description: String, rating: Int, premium: Boolean? = false, user: UserReview,
-                spoiler: Boolean? = false, date: Date? = Date(), reports: List<Report>? = listOf(), likes: Int? = 0, dislikes: Int? = 0) {
+    constructor(title: Title?, overview: String, description: String, rating: Int,
+            platform: Platform?, platformID: String, language: String,
+            date: Date? = Date(),likes: Int? = 0, dislikes: Int? = 0) {
         title?.let { this.setTitleReview(it) }
         this.rating = rating
-        this.user = user
         this.date = date
         this.description = description
         this.overview = overview
-        this.premium = premium
-        this.spoiler = spoiler
-        this.reports = reports
         this.likes = likes
         this.dislikes = dislikes
-    }
-
-    fun addReport(reason: String): Report {
-        val report = Report(this, reason)
-        this.reports = this.reports!!.plus(report)
-        return report
+        this.platform = platform
+        this.platformID = platformID
+        this.language = language
     }
 
     fun addLike(isLike: Boolean) {
