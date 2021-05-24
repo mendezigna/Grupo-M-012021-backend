@@ -2,7 +2,9 @@ package unq.edu.ar.GrupoMs12021.Resenia.webservice.dto
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.PublicReview
 import java.util.*
+import javax.persistence.ManyToOne
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class ReviewGenericDTO {
@@ -26,6 +28,11 @@ class ReviewGenericDTO {
     var nicknames: String? = null
     var location: String? = null
     var spoiler: Boolean? = null
-    var reportsId: List<Long>? = listOf()
+    var reportsId: List<ReportDTO>? = listOf()
 
+}
+
+class ReportDTO {
+    var id: Long ? = null
+    var reason: String? = null
 }

@@ -1,10 +1,13 @@
 package unq.edu.ar.GrupoMs12021.Resenia.service
 
 import org.springframework.stereotype.Service
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.PublicReview
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.Report
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ReviewDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
+import java.lang.RuntimeException
 import java.util.*
 
 @Service
@@ -43,5 +46,25 @@ class ReviewService(private val reviewDAO: ReviewDAO,
         // check duplic reviews
         review.setTitleReview(title)
         return this.save(review)
+    }
+
+    fun getReports(id: Long): List<Report>? {
+        val found: Optional<Review> = this.reviewDAO.findById(id)
+        if (found.isPresent && found.get() is PublicReview ){
+            return (found.get() as PublicReview).reports
+        }else{
+            throw RuntimeException(String.format("PublicReview not found id:[%s]", id))
+        }
+    }
+
+    fun createReport(idReview: Long, report: Report): PublicReview {
+        val found: Optional<Review> = this.reviewDAO.findById(idReview)
+        if (found.isPresent && found.get() is PublicReview ){
+            val review = found.get()
+            var report = (review as PublicReview).addReport(report.reason!!)
+            return this.reviewDAO.save(review)
+        }else{
+            throw RuntimeException(String.format("PublicReview not found id:[%s]", idReview))
+        }
     }
 }

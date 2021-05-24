@@ -30,7 +30,7 @@ class ReviewMapper {
         }
         else if (rev is PublicReview) {
             dto = mapper!!.map(rev, ReviewGenericDTO::class.java)
-            dto.reportsId = rev.reports!!.map { report:Report -> report.id!! }
+            dto.reportsId = rev.reports!!.map { report:Report -> toDto(report) }
             dto.ReviewType = Type_Public
         }
         dto!!.titleID = rev.title!!.titleId
@@ -39,14 +39,19 @@ class ReviewMapper {
 
     fun toEntity(dto: ReviewGenericDTO): Review {
         if (dto.ReviewType.equals(Type_Premium)){
-            var entity = this.mapper!!.map(dto, PremiumReview::class.java)
-            return entity
+            return this.mapper!!.map(dto, PremiumReview::class.java)
         }
         else if(dto.ReviewType.equals(Type_Public)) {
-            var entity = this.mapper!!.map(dto, PublicReview::class.java)
-            return entity
+            return this.mapper!!.map(dto, PublicReview::class.java)
         }
         return Review()
+    }
+
+    fun toDto(reviewReport: Report): ReportDTO {
+        return this.mapper!!.map(reviewReport, ReportDTO::class.java)
+    }
+    fun toEntity(dto: ReportDTO): Report {
+        return this.mapper!!.map(dto, Report::class.java)
     }
 
 }

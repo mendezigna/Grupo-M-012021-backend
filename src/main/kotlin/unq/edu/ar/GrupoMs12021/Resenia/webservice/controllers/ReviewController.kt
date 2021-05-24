@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.Report
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.service.ReviewService
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReportDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewGenericDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewMapper
 
@@ -45,6 +47,16 @@ class ReviewController(private val reviewService: ReviewService) {
     @PostMapping("/title/{titleId}")
     fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewGenericDTO): ReviewGenericDTO {
         return this.mapper!!.toDto(this.reviewService.create(mapper!!.toEntity(reviewDTO), titleId))
+    }
+
+    @GetMapping("/{id}/reports")
+    fun getReportsByReview(@PathVariable id: Long): List<ReportDTO> {
+        return this.reviewService.getReports(id)!!.map { report: Report -> mapper!!.toDto(report)  }
+    }
+
+    @PostMapping("/{id}/reports")
+    fun createReportReview(@PathVariable id: Long, @RequestBody reportDTO: ReportDTO): ReviewGenericDTO {
+        return this.mapper!!.toDto(this.reviewService.createReport(id, mapper!!.toEntity(reportDTO)))
     }
 
 }
