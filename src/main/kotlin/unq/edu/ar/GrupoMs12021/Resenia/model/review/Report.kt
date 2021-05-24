@@ -1,6 +1,5 @@
 package unq.edu.ar.GrupoMs12021.Resenia.model.review
 
-import unq.edu.ar.GrupoMs12021.Resenia.model.client.Client
 import javax.persistence.*
 
 @Entity
@@ -11,9 +10,9 @@ class Report {
     var id: Long ? = null
     var reason: String? = null
     @ManyToOne
-    var review: Review? = null
+    var review: PublicReview? = null
 
-    constructor(review: Review, reason: String, ){
+    constructor(review: PublicReview, reason: String ){
         this.review = review
         this.reason = reason
     }

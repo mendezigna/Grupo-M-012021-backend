@@ -2,17 +2,14 @@ package unq.edu.ar.GrupoMs12021.Resenia.service
 
 import org.springframework.stereotype.Service
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ReviewDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
-import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.UserReviewDAO
 import java.util.*
 
 @Service
 class ReviewService(private val reviewDAO: ReviewDAO,
-                    private val titleDAO: TitleDAO,
-                    private val userReviewDAO: UserReviewDAO
+                    private val titleDAO: TitleDAO
                     ) {
 
     fun getAll(): List<Review> {
@@ -37,21 +34,14 @@ class ReviewService(private val reviewDAO: ReviewDAO,
         return this.reviewDAO.save(review)
     }
 
-    fun save(review: Review, title: Title, user: UserReview): Review {
-        review.user = user
-        review.setTitleReview(title)
+    fun save(review: Review): Review {
         return this.reviewDAO.save(review)
     }
 
     fun create(review: Review, titleId: String): Review {
         var title: Title = titleDAO.findByTitleId(titleId)
-        var userFound: Optional<UserReview> =
-                this.userReviewDAO.getFirstByPlatformIDAndPlatform(review.user?.platformID!!, review.user!!.platform!!)
-        var user: UserReview = if (userFound.isEmpty) {
-            this.userReviewDAO.save(review.user!!)
-        } else {
-            userFound.get()
-        }
-        return this.save(review, title, user)
+        // check duplic reviews
+        review.setTitleReview(title)
+        return this.save(review)
     }
 }

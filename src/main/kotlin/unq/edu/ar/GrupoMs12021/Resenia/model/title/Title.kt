@@ -36,7 +36,7 @@ class Title() {
     @OneToOne(mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var cast : Cast? = null
 
-    @OneToMany(mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    @OneToMany(targetEntity=Review::class, mappedBy = "title", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     var reviews: List<Review> = listOf()
 
     constructor(titleId: String, titleType: TitleType, name : String, startYear: Int, endYear: Int?, runtimeMinutes: Int, genres: List<Genres>, reviews: List<Review>, cast : Cast) : this() {

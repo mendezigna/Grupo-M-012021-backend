@@ -3,9 +3,7 @@ package unq.edu.ar.GrupoMs12021.Resenia.service
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Service
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.UserReview
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Genres
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleBasicInformation
@@ -74,27 +72,53 @@ class DataService(private val titleDAO: TitleDAO,
     val title24: Title = Title.createTitleWith("tt0000024", TitleBasicInformation(TitleType.TVSERIES, "Diego al 100%", 1984, 1985, 0, listOf(Genres.COMEDY)), listOf(), cast24)
     val title25: Title = Title.createTitleWith("tt0000025", TitleBasicInformation(TitleType.TVSERIES, "The Comedy Game", 1971, 1973, 30, listOf(Genres.COMEDY)), listOf(), cast25)
 
-    final var user1: UserReview = UserReview(Platform.Netflix,"juan_yoPago@example.com","Juan","Buenos Aires, Argentina","spanish")
-    final var user2: UserReview = UserReview(Platform.AmazonPrime,"juan_yoPago@example.com","Juan","Buenos Aires, Argentina","spanish")
-    final var user3: UserReview = UserReview(Platform.DisneyPlus,"juan_yoPago@example.com","Juan Jr","Buenos Aires, Argentina","spanish")
-    final var user4: UserReview = UserReview(Platform.HBOPlus,"juan_yoPago@example.com","Juancito","Buenos Aires, Argentina","spanish")
-    final var user5: UserReview = UserReview(Platform.Netflix,"pablo.campeon@example.com","Pablito","Salta, Argentina","spanish")
+    var pl = Platform.Netflix
 
+    var langES = "ES"
+    var langEN = "EN"
 
-    var rev1: Review = Review(title1, "Excellent", "Some good description", 5, false, user1)
-    var rev2: Review = Review(title2, "The worst", "Some bad description", 1, false, user1)
-    var rev3: Review = Review(title3, "Okay...", "Some ok description", 3, false, user2)
-    var rev4: Review = Review(title4, "Good", "Some good description", 4, false, user3)
-    var rev5: Review = Review(title4, "Good", "Some goood description", 3, false, user4)
+    final var user1_ID = "juan_perez@example.com"
+    final var user1_nick = "Juan"
+    final var user1_loc = "CABA, Argentina"
+    final var user2_ID = "juan_perez_2@example.com"
+    final var user2_nick = "Juan Junior"
+    final var user2_loc = "CABA, Argentina"
+
+    final var user3_ID = "juan_pablo@example.com"
+    final var user3_nick = "Juan P"
+    final var user3_loc = "Salta, Argentina"
+
+    final var user4_ID = "juan_manuel@example.com"
+    final var user4_nick = "Juanma"
+    final var user4_loc = "BsAs, Argentina"
+
+    final var critic1 = "juan.martin.perez@professional.com"
+    final var critic2 = "juan.jose.martinez@professional.com"
+
+    var rev1: Review = PublicReview(title1, "Excellent", "Some description", 5, langEN, pl, user1_ID, user1_nick, user1_loc)
+    var rev2: Review = PublicReview(title2, "OK", "Some ok description", 2, langEN, pl, user2_ID, user2_nick, user2_loc)
+    var rev3: Review = PublicReview(title3, "the worst", "Some bad description", 1, langEN, pl, user3_ID, user3_nick, user3_loc)
+    var rev4: Review = PublicReview(title1, "Good", "Some good description", 4, langEN, pl, user4_ID, user4_nick, user4_loc)
+    var rev5: Review = PublicReview(title2, "Okay", "Some ok description", 3, langEN, pl, user4_ID, user4_nick, user4_loc)
+
+    var rev6: Review = PremiumReview(title1, "Premium overview", "Some description", 3, langEN, pl, critic1)
+    var rev7: Review = PremiumReview(title2, "Premium overview", "Some description", 3, langEN, pl, critic1)
+    var rev8: Review = PremiumReview(title1, "Premium overview", "Some description", 3, langEN, pl, critic2)
+    var rev9: Review = PremiumReview(title3, "Aceptable", "Descripcion...", 3, langES, pl, critic2)
+
+    val reason = "A text explaning a reason to report the review"
 
     fun setUp(){
+        // reports
+        (rev3 as PublicReview).addReport(reason)
+        (rev3 as PublicReview).addReport(reason)
     }
 
     override fun run(args: ApplicationArguments?) {
         setUp()
         val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25)
         titleDAO.saveAll(titles)
-        reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5))
+        reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5, rev6, rev7, rev8, rev9))
 
     }
 }

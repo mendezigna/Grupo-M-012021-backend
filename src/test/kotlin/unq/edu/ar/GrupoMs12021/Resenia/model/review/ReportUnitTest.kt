@@ -7,12 +7,15 @@ class ReportUnitTest {
 
     @Test
     fun aReportHasReasonReviewandUser(){
-        val review = Review()
+        val review = PublicReview()
         val reason = "A text explaning a reason to report the review"
+        val ID: Long = 1L;
         var report = Report(review,reason)
+        report.id = ID
 
         Assert.assertEquals(review, report.review)
         Assert.assertEquals(reason, report.reason)
+        Assert.assertEquals(ID, report.id)
 
     }
 }
