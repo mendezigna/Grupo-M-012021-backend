@@ -11,7 +11,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.service.ReviewService
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReportDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewGenericDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewMapper
-import unq.edu.ar.GrupoMs12021.Resenia.service.aspects.ApiKey
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
 
 @RestController
 @CrossOrigin(origins = ["*"])
