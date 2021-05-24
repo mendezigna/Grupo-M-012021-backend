@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
 import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
+import unq.edu.ar.GrupoMs12021.Resenia.service.aspects.ApiKey
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 
 @RestController
@@ -12,6 +13,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 @RequestMapping("/title")
 class TitleController(@Autowired private val titleService: TitleService) {
 
+    @ApiKey
     @GetMapping("{id}")
     fun getTitleByID(@PathVariable id: String): TitleDTO {
         return TitleDTO.fromModel(this.titleService.get(id))
