@@ -16,7 +16,9 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
 
     override fun configure(http: HttpSecurity) {
-        http.cors()
+        http.cors().and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET,"/swagger**").permitAll()
             .and()
             .csrf().disable()
             .addFilterAfter(JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)
