@@ -11,6 +11,8 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ClientDTO
 import java.util.stream.Collectors
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import java.util.*
 
 
@@ -38,8 +40,8 @@ class ClientController(@Autowired private val clientService: ClientService) {
     }
 
     @GetMapping("/test")
-    fun test() : String {
-        return "Test"
+    fun test() : ResponseEntity<String> {
+        return ResponseEntity("hola", HttpStatus.OK)
     }
 
     private fun getJWTToken(username: String): String {
