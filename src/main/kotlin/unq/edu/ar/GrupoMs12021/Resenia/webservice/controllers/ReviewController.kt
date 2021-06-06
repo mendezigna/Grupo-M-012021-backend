@@ -1,8 +1,6 @@
 package unq.edu.ar.GrupoMs12021.Resenia.webservice.controllers
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Report
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
@@ -12,6 +10,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReportDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewGenericDTO
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ReviewMapper
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
+import javax.servlet.http.HttpServletRequest
 
 @RestController
 @CrossOrigin(origins = ["*"])
@@ -21,13 +20,17 @@ class ReviewController(private val reviewService: ReviewService) {
     @Autowired
     var mapper: ReviewMapper? = ReviewMapper()
 
-    @ApiKey
+//    @ApiKey
     @GetMapping()
-    fun getAll(): List<ReviewGenericDTO> {
-        return  this.reviewService.getAll().map { rev: Review -> mapper!!.toDto(rev) }
+    fun getAll(@RequestParam(required = false) nPage:String?,
+        @RequestParam(required = false) sizePage:String?,
+        req: HttpServletRequest
+    ): List<ReviewGenericDTO> {
+        val paramsMap = req.parameterMap
+        return  this.reviewService.getAll(paramsMap).map { rev: Review -> mapper!!.toDto(rev) }
     }
 
-    @ApiKey
+//    @ApiKey
     @GetMapping("{id}")
     fun getByID(@PathVariable id: Long): ReviewGenericDTO {
         return this.mapper!!.toDto(this.reviewService.getById(id))
@@ -39,19 +42,19 @@ class ReviewController(private val reviewService: ReviewService) {
         return this.mapper!!.toDto(this.reviewService.addLiking(id, true))
     }
 
-    @ApiKey
+//    @ApiKey
     @PostMapping("/{id}/dislike")
     fun dislikeReview(@PathVariable id: Long): ReviewGenericDTO {
         return this.mapper!!.toDto(this.reviewService.addLiking(id, false))
     }
 
-    @ApiKey
+//    @ApiKey
     @GetMapping("/title/{titleId}")
     fun getByTitleId(@PathVariable titleId: String): List<ReviewGenericDTO> {
         return this.reviewService.getByTitleId(titleId).map { rev: Review -> mapper!!.toDto(rev) }
     }
 
-    @ApiKey
+//    @ApiKey
     @PostMapping("/title/{titleId}")
     fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewGenericDTO): ReviewGenericDTO {
         return this.mapper!!.toDto(this.reviewService.create(mapper!!.toEntity(reviewDTO), titleId))

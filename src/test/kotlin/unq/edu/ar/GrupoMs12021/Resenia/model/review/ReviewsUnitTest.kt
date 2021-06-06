@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import java.util.*
-import javax.sound.sampled.DataLine
 
 class ReviewsUnitTest {
 
@@ -21,7 +20,7 @@ class ReviewsUnitTest {
         val date = Date()
         val isSpoiler = false
 
-        val review = PublicReview(title = t1, overview = overview, description = description, rating = 1, date =date,
+        val review = PublicReview(title = t1, overview = overview, description = description, rating = 1f, date =date,
                 spoiler = isSpoiler, language = lang, platform = pl, platformId = plId, nickname = plNick, location = loc)
         Assertions.assertEquals(1, review.rating)
         Assertions.assertEquals(overview, review.overview)
@@ -44,7 +43,7 @@ class ReviewsUnitTest {
 
     @Test
     fun addOneReportTest(){
-        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1,
+        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1f,
                 language = "ES", platform =  Platform.Netflix, platformId =  "jon.snow", nickname =  "unNick", location = "ARG")
         val initialReportsAmount = review.reports?.size
 
@@ -55,7 +54,7 @@ class ReviewsUnitTest {
 
     @Test
     fun noLikesOnNewReviewTest(){
-        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1,
+        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1f,
                 language = "ES", platform =  Platform.Netflix, platformId =  "jon.snow", nickname =  "unNick", location = "ARG")
 
         Assertions.assertEquals( 0, review.likes )
@@ -64,7 +63,7 @@ class ReviewsUnitTest {
 
     @Test
     fun addLikeOnNewReviewTest(){
-        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1,
+        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1f,
                 language = "ES", platform =  Platform.Netflix, platformId =  "jon.snow", nickname =  "unNick", location = "ARG")
 
         val likeIt = true
@@ -75,7 +74,7 @@ class ReviewsUnitTest {
 
     @Test
     fun addDislikeReviewTest(){
-        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1,
+        val review = PublicReview(title = Title(), overview = "overview", description = "description", rating = 1f,
                 language = "ES", platform =  Platform.Netflix, platformId =  "jon.snow", nickname =  "unNick", location = "ARG")
         val dislikeIt = false
         review.addLike(dislikeIt)
@@ -93,8 +92,8 @@ class ReviewsUnitTest {
         val plId = "juan@example.com"
         val adate: Date = Date()
 
-        val review = PremiumReview(t1, "overview", "descript", 5, "ES", pl, plId, adate)
-        Assertions.assertEquals(5, review.rating)
+        val review = PremiumReview(t1, "overview", "descript", 5f, "ES", pl, plId, adate)
+        Assertions.assertEquals(5f, review.rating)
         Assertions.assertEquals("overview", review.overview)
         Assertions.assertEquals(adate, review.date)
         Assertions.assertEquals("descript", review.description)

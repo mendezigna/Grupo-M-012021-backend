@@ -5,7 +5,7 @@ import java.util.*
 import javax.persistence.Entity
 
 @Entity
-class PremiumReview(title: Title?, overview: String, description: String, rating: Int, language: String,  platform: Platform?,
+class PremiumReview(title: Title?, overview: String, description: String, rating: Float, language: String,  platform: Platform?,
                     platformID: String, date: Date? = Date(), likes: Int? = 0, dislikes: Int? = 0) :
         Review(title, overview, description, rating, platform, platformID, language, date, likes, dislikes) {
 

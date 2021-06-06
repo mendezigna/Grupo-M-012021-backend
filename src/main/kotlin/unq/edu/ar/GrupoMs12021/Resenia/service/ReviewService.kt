@@ -15,7 +15,14 @@ class ReviewService(private val reviewDAO: ReviewDAO,
                     private val titleDAO: TitleDAO
                     ) {
 
-    fun getAll(): List<Review> {
+    fun getAll(paramsMap: MutableMap<String, Array<String>>): List<Review> {
+//        Se debe poder filtrar por
+//        plataforma, spoiler alert, tipo (review o crítica), idioma y país.
+//        -paginados
+//        -ordenar por rating y/o fecha,
+
+//        val res = this.search.findTitlesFiltered()
+//        val res = this.search.findTitlesFiltered()
         return reviewDAO.findAll().toList()
     }
 

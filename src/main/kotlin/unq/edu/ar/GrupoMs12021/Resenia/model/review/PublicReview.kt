@@ -16,7 +16,7 @@ class PublicReview: Review {
     var spoiler: Boolean? = false
 
     constructor(){}
-    constructor(title: Title?, overview: String, description: String, rating: Int, language: String,
+    constructor(title: Title?, overview: String, description: String, rating: Float, language: String,
                 platform: Platform, platformId: String, nickname: String, location: String,
                 date: Date? = Date(), spoiler: Boolean? = false, likes: Int? = 0, dislikes: Int? = 0
     ) : super() {

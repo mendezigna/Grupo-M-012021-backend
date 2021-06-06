@@ -52,6 +52,8 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
     val cast23 = Cast("Paul Greengrass", listOf(Actor("Ben Kinglsey", listOf("Clare Moran")), Actor("Mahershala Ali", listOf("Roman Brady"))), listOf(Employee("Laura", Category.WRITER), Employee("Milena", Category.PRODUCER)))
     val cast24 = Cast("Pedro Almodovar", listOf(Actor("Jon Hamm", listOf("Dr. Bruce Russell")), Actor("Viggo Mortensen", listOf("Franco Kelly"))), listOf(Employee("Alejandro", Category.COMPOSER), Employee("Barbara", Category.WRITER)))
     val cast25 = Cast("Jon Favreau", listOf(Actor("Tommy Lee Jones", listOf("Gajan")), Actor("Sam Rockwell", listOf("Dr. Piccard"))), listOf(Employee("Esteban", Category.CINEMATOGRAPHER_DIRECTOR_OF_PHOTOGRAPHY)))
+    val cast26 = Cast("John McTiernan", listOf(Actor("Bruce Willis", listOf("John McClane")), Actor("Sam Rockwell", listOf("Dr. Piccard"))), listOf(Employee("Esteban", Category.CINEMATOGRAPHER_DIRECTOR_OF_PHOTOGRAPHY)))
+    val cast27 = Cast("Renny Harlin", listOf(Actor("Bonnie Bedelia", listOf("Holly")), Actor("Bruce Willis", listOf("Pelado"))), listOf(Employee("Esteban", Category.CINEMATOGRAPHER_DIRECTOR_OF_PHOTOGRAPHY)))
 
     final val title1: Title = Title.createTitleWith("tt0000001", TitleBasicInformation(TitleType.SHORT, "Carmecita", 1894, null, 1, listOf(Genres.DOCUMENTARY, Genres.SHORT)), listOf(), cast1)
     final val title2: Title = Title.createTitleWith("tt0000002", TitleBasicInformation(TitleType.MOVIE, "American Beer", 2004, null, 105, listOf(Genres.DOCUMENTARY)), listOf(), cast2)
@@ -78,6 +80,8 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
     val title23: Title = Title.createTitleWith("tt0000023", TitleBasicInformation(TitleType.SHORT, "Lost and Found", 2017, null, 5, listOf(Genres.SHORT)), listOf(), cast23)
     val title24: Title = Title.createTitleWith("tt0000024", TitleBasicInformation(TitleType.TVSERIES, "Diego al 100%", 1984, 1985, 0, listOf(Genres.COMEDY)), listOf(), cast24)
     val title25: Title = Title.createTitleWith("tt0000025", TitleBasicInformation(TitleType.TVSERIES, "The Comedy Game", 1971, 1973, 30, listOf(Genres.COMEDY)), listOf(), cast25)
+    final val title26: Title = Title.createTitleWith("tt0000026", TitleBasicInformation(TitleType.MOVIE, "Die Hard", 1988, 1988, 90, listOf(Genres.ACTION)), listOf(), cast26)
+    final val title27: Title = Title.createTitleWith("tt0000027", TitleBasicInformation(TitleType.MOVIE, "Duro de Matar 2: mas duro que nunca", 1991, 1991, 90, listOf(Genres.ACTION)), listOf(), cast27)
 
     var pl = Platform.Netflix
 
@@ -102,16 +106,17 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
     final var critic1 = "juan.martin.perez@professional.com"
     final var critic2 = "juan.jose.martinez@professional.com"
 
-    var rev1: Review = PublicReview(title1, "Excellent", "Some description", 5, langEN, pl, user1_ID, user1_nick, user1_loc)
-    var rev2: Review = PublicReview(title2, "OK", "Some ok description", 2, langEN, pl, user2_ID, user2_nick, user2_loc)
-    var rev3: Review = PublicReview(title3, "the worst", "Some bad description", 1, langEN, pl, user3_ID, user3_nick, user3_loc)
-    var rev4: Review = PublicReview(title1, "Good", "Some good description", 4, langEN, pl, user4_ID, user4_nick, user4_loc)
-    var rev5: Review = PublicReview(title2, "Okay", "Some ok description", 3, langEN, pl, user4_ID, user4_nick, user4_loc)
+    var rev1: Review = PublicReview(title26, "Excellent", "Some Excellent description", 4.7f, langEN, pl, user1_ID, user1_nick, user1_loc)
+    var rev2: Review = PublicReview(title27, "OK", "Some ok description", 4f, langEN, pl, user2_ID, user2_nick, user2_loc)
+    var rev3: Review = PublicReview(title3, "the worst", "Some bad description", 1f, langEN, pl, user3_ID, user3_nick, user3_loc)
+    var rev4: Review = PublicReview(title1, "Good", "Some good description", 4f, langEN, pl, user4_ID, user4_nick, user4_loc)
+    var rev5: Review = PublicReview(title2, "Okay", "Some ok description", 3f, langEN, pl, user4_ID, user4_nick, user4_loc)
 
-    var rev6: Review = PremiumReview(title1, "Premium overview", "Some description", 3, langEN, pl, critic1)
-    var rev7: Review = PremiumReview(title2, "Premium overview", "Some description", 3, langEN, pl, critic1)
-    var rev8: Review = PremiumReview(title1, "Premium overview", "Some description", 3, langEN, pl, critic2)
-    var rev9: Review = PremiumReview(title3, "Aceptable", "Descripcion...", 3, langES, pl, critic2)
+    var rev6: Review = PremiumReview(title1, "Premium overview", "Some description", 5f, langEN, pl, critic1)
+    var rev7: Review = PremiumReview(title2, "Premium overview", "Some description", 3f, langEN, pl, critic1)
+    var rev8: Review = PremiumReview(title1, "Premium overview", "Some description", 3f, langEN, pl, critic2)
+    var rev9: Review = PremiumReview(title3, "Aceptable", "Descripcion...", 4.5f, langES, pl, critic2)
+    var rev10: Review = PremiumReview(title4, "Descepcionante", "Descripcion...", 1.5f, langES, pl, critic2)
 
     val reason = "A text explaning a reason to report the review"
 
@@ -121,14 +126,23 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
         // reports
         (rev3 as PublicReview).addReport(reason)
         (rev3 as PublicReview).addReport(reason)
+
+        //valoraciones
+        rev4.addLike(true); rev6.addLike(true); rev8.addLike(false); //title1
+        rev5.addLike(true); rev7.addLike(true); rev7.addLike(false); //title2
+        rev1.addLike(true) //title26
+        rev2.addLike(true) //title 27
+        rev10.addLike(true) //title 4
+        rev9.addLike(true) //title 3
+
     }
 
     override fun run(args: ApplicationArguments?) {
         setUp()
         clientDAO.save(client1)
-        val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25)
+        val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25, title26, title27)
         titleDAO.saveAll(titles)
-        reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5, rev6, rev7, rev8, rev9))
+        reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5, rev6, rev7, rev8, rev9, rev10))
 
     }
 }

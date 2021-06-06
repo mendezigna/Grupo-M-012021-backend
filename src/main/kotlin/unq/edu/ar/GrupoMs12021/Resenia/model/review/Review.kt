@@ -15,7 +15,7 @@ open class Review {
     open var title: Title? = null
     open var overview: String? = null
     open var description: String? = null
-    open var rating: Int? = null
+    open var rating: Float? = null
     open var date: Date? = null
     open var likes: Int? = 0
     open var dislikes: Int? = 0
@@ -24,7 +24,7 @@ open class Review {
     open var language: String? = null
 
     constructor() {}
-    constructor(title: Title?, overview: String, description: String, rating: Int,
+    constructor(title: Title?, overview: String, description: String, rating: Float,
             platform: Platform?, platformID: String, language: String,
             date: Date? = Date(),likes: Int? = 0, dislikes: Int? = 0) {
         title?.let { this.setTitleReview(it) }
