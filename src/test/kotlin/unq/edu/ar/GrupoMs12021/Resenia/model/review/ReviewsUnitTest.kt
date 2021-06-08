@@ -22,7 +22,7 @@ class ReviewsUnitTest {
 
         val review = PublicReview(title = t1, overview = overview, description = description, rating = 1f, date =date,
                 spoiler = isSpoiler, language = lang, platform = pl, platformId = plId, nickname = plNick, location = loc)
-        Assertions.assertEquals(1, review.rating)
+        Assertions.assertEquals(1.0f, review.rating)
         Assertions.assertEquals(overview, review.overview)
         Assertions.assertEquals(date, review.date)
         Assertions.assertEquals(description, review.description)
