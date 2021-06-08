@@ -16,7 +16,7 @@ class ReviewGenericDTO {
     var titleID: String? = null
     var overview: String? = null
     var description: String? = null
-    var rating: Int? = null
+    var rating: Float? = null
     var date: Date? = null
     var likes: Int? = 0
     var dislikes: Int? = 0

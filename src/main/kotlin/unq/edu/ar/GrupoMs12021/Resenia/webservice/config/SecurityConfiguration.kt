@@ -9,31 +9,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 
-//@Configuration
-//@EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 class SecurityConfiguration : WebSecurityConfigurerAdapter() {
 
 
-//    override fun configure(http: HttpSecurity) {
-//        http.cors().and()
-//            .authorizeRequests()
-//            .antMatchers("/v2/api-docs",
-//                        "/configuration/ui",
-//                        "/swagger-resources/**",
-//                        "/configuration/security",
-//                        "/swagger-ui.html",
-//                        "/webjars/**").permitAll()
-//            .and()
-//            .csrf().disable()
-//            .addFilterAfter(JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)
-//            .authorizeRequests()
-//            .antMatchers(HttpMethod.GET, "/review/**", "/title/**")
-//            .permitAll()
-//            .antMatchers(HttpMethod.POST,  "/client/login/**", "/client/register/**", "/review/**", "/title/**")
-//            .permitAll()
-//            .anyRequest()
-//            .authenticated()
-//    }
+    override fun configure(http: HttpSecurity) {
+        http.cors().and()
+            .authorizeRequests()
+            .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**").permitAll()
+            .and()
+            .csrf().disable()
+            .addFilterAfter(JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/review/**", "/title/**")
+            .permitAll()
+            .antMatchers(HttpMethod.POST,  "/client/login/**", "/client/register/**", "/review/**", "/title/**")
+            .permitAll()
+            .anyRequest()
+            .authenticated()
+    }
 
 }

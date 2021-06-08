@@ -1,4 +1,4 @@
-package unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.filter
+package unq.edu.ar.GrupoMs12021.Resenia.service.filter.impl
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,10 +13,9 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.persistence.criteria.*
 
-
 @Service
 @Transactional(readOnly = true)
-class SearchTitlesService {
+class TitleFilterService {
 
     @PersistenceContext
     private val em: EntityManager? = null
@@ -94,5 +93,3 @@ class SearchTitlesService {
     }
 
 }
-
-

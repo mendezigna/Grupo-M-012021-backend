@@ -7,23 +7,19 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ReviewDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
+import unq.edu.ar.GrupoMs12021.Resenia.service.filter.impl.ReviewFilterService
+import unq.edu.ar.GrupoMs12021.Resenia.service.filter.ReviewFilter
 import java.lang.RuntimeException
 import java.util.*
 
 @Service
 class ReviewService(private val reviewDAO: ReviewDAO,
-                    private val titleDAO: TitleDAO
+                    private val titleDAO: TitleDAO,
+                    private val filterSearch: ReviewFilterService
                     ) {
 
-    fun getAll(paramsMap: MutableMap<String, Array<String>>): List<Review> {
-//        Se debe poder filtrar por
-//        plataforma, spoiler alert, tipo (review o crítica), idioma y país.
-//        -paginados
-//        -ordenar por rating y/o fecha,
-
-//        val res = this.search.findTitlesFiltered()
-//        val res = this.search.findTitlesFiltered()
-        return reviewDAO.findAll().toList()
+    fun getAll(filter: ReviewFilter): List<Review> {
+        return this.filterSearch.findReviewsFiltered(filter)
     }
 
     fun getById(id: Long): Review {
@@ -35,7 +31,10 @@ class ReviewService(private val reviewDAO: ReviewDAO,
     }
 
     fun getByTitleId(titleId: String): List<Review> {
-        return this.reviewDAO.findReviewsByTitleTitleId(titleId)
+        var filter: ReviewFilter = ReviewFilter.createEmptyFilter()
+        filter.titleId = titleId
+//        return this.reviewDAO.findReviewsByTitleTitleId(titleId)
+        return this.filterSearch.findReviewsFiltered(filter)
     }
 
     fun addLiking(id: Long, isLike: Boolean): Review {
@@ -68,7 +67,7 @@ class ReviewService(private val reviewDAO: ReviewDAO,
         val found: Optional<Review> = this.reviewDAO.findById(idReview)
         if (found.isPresent && found.get() is PublicReview ){
             val review = found.get()
-            var report = (review as PublicReview).addReport(report.reason!!)
+            (review as PublicReview).addReport(report.reason!!)
             return this.reviewDAO.save(review)
         }else{
             throw RuntimeException(String.format("PublicReview not found id:[%s]", idReview))

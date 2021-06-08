@@ -7,12 +7,14 @@ import unq.edu.ar.GrupoMs12021.Resenia.service.TitleService
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleDTO
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.TitleFilter
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
+
 @RestController
 @CrossOrigin(origins = ["*"])
-@RequestMapping("/titles")
+@RequestMapping("/title")
 class TitleController(@Autowired private val titleService: TitleService) {
 
-//    @ApiKey
+    @ApiKey
     @GetMapping
     fun getAll(@RequestParam(required = false) numPage:Int?,
                @RequestParam(required = false) sizePage:Int?,
@@ -23,14 +25,13 @@ class TitleController(@Autowired private val titleService: TitleService) {
                @RequestParam(required = false) actor:String?,
                @RequestParam(required = false) decade:Int?,
                @RequestParam(required = false) rating:Float?,
-               @RequestParam(required = false) likesGT:String?,
-//               req: HttpServletRequest
+               @RequestParam(required = false) likesGT:String?
     ): List<TitleDTO> {
         val titleFilter = TitleFilter(numPage, sizePage, titleType, genre, titleName, director, actor, decade, rating, likesGT)
         return this.titleService.getAll(titleFilter).map { t:Title -> TitleDTO.fromModel(t) }
     }
 
-//    @ApiKey
+    @ApiKey
     @GetMapping("{id}")
     fun getTitleByID(@PathVariable id: String): TitleDTO {
         return TitleDTO.fromModel(this.titleService.get(id))

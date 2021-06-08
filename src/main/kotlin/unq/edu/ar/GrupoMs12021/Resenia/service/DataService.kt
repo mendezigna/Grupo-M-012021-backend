@@ -91,6 +91,7 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
     final var user1_ID = "juan_perez@example.com"
     final var user1_nick = "Juan"
     final var user1_loc = "CABA, Argentina"
+
     final var user2_ID = "juan_perez_2@example.com"
     final var user2_nick = "Juan Junior"
     final var user2_loc = "CABA, Argentina"
