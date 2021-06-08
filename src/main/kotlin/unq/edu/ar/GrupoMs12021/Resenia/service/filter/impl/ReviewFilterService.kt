@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.PublicReview
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.Report
 import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.FiltersReviewFields
@@ -12,6 +13,7 @@ import java.util.*
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.persistence.criteria.*
+
 
 @Service
 @Transactional(readOnly = true)
@@ -26,26 +28,22 @@ class ReviewFilterService {
 
         var countquery: CriteriaQuery<Long> = cb.createQuery(Long::class.java)
         val countreviewroot: Root<Review> = countquery.from(Review::class.java)
-        countquery.select(cb.countDistinct(countreviewroot)).distinct(true)
+        countquery.select(cb.countDistinct(countreviewroot))
+                .distinct(true)
 
         var reviewquery: CriteriaQuery<Review> = cb.createQuery(Review::class.java)
         val reviewroot: Root<Review> = reviewquery.from(Review::class.java)
 
-        filter.buildFilterMap().forEach { (k, v) ->
-            run {
-                // filtros Review
-                reviewquery.where(this.createPredicate(cb, reviewroot, k, v)!!)
-                // filtros Count
-                countquery.where(this.createPredicate(cb, countreviewroot, k, v)!!)
-            }
-        }
+        // conditions/filters
+        reviewquery.where(*buildPredicatesArray(cb, reviewroot, reviewquery as CriteriaQuery<Any>, filter));
+        countquery.where(*buildPredicatesArray(cb, countreviewroot, countquery as CriteriaQuery<Any>, filter));
 
-        // order to list
+        // order to show list
         reviewquery.orderBy(addFiltersOrder(cb, reviewroot, filter))
 
 
         // execute total rows count
-        val resCount = em.createQuery(countquery).singleResult
+        val resCount = em.createQuery(countquery as CriteriaQuery<Long>).singleResult
         val totalPages: Int = roundUp(resCount.toInt(), filter.sizePage)
 
         if (filter.numPage>totalPages){
@@ -53,7 +51,7 @@ class ReviewFilterService {
         }
 
         // titles query
-        val indexedQuery = em.createQuery(reviewquery)
+        val indexedQuery = em.createQuery(reviewquery as CriteriaQuery<Review>)
                 .setFirstResult(filter.numPage * filter.sizePage)
                 .setMaxResults(filter.sizePage)
 
@@ -62,13 +60,22 @@ class ReviewFilterService {
 
     }
 
-
+    private fun buildPredicatesArray(cb: CriteriaBuilder, reviewroot: Root<Review>, query: CriteriaQuery<Any>, filter: ReviewFilter): Array<Predicate> {
+        var predicates: MutableList<Predicate> = mutableListOf(
+                // Default conditions:
+                createReportsFilter(cb,reviewroot,query as CriteriaQuery<Any>)!!
+        )
+        filter.buildFilterMap().forEach { (k, v) ->
+            predicates.add(this.createPredicate(cb, reviewroot, k, v)!!)
+        }
+        return predicates.toTypedArray()
+    }
 
     private fun createPredicate(criteriaBuilder: CriteriaBuilder, root: Root<Review>, filter: String, filterValue: Any): Predicate? {
         when (filter) {
             FiltersReviewFields.titleID -> {
                 val join: Join<Review, Title> = root.join("title", JoinType.LEFT)
-                return criteriaBuilder.like(join.get("titleId "), "%${(filterValue)}%")
+                return criteriaBuilder.like(join.get<String>("titleId"), "%${filterValue}%")
             }
             FiltersReviewFields.platform -> return criteriaBuilder.equal(root.get<Platform>("platform"), filterValue)
             FiltersReviewFields.language -> return criteriaBuilder.like(root.get("language"), "%${filterValue}%")
@@ -80,12 +87,6 @@ class ReviewFilterService {
                 return criteriaBuilder.equal(criteriaBuilder.treat(root, PublicReview::class.java).get<Boolean>("spoiler"), filterValue)
             }
             FiltersReviewFields.rating -> return criteriaBuilder.greaterThanOrEqualTo(root.get<Float>("rating"), filterValue as Float)
-//            FiltersReviewFields.hasNoReports -> {
-//                val reportRoot: Join<Review, Report> = root.join("reports", JoinType.LEFT)
-//                return criteriaBuilder.isEmpty (
-//                        criteriaBuilder.treat(root, PublicReview::class.java).get("reports").`in` (reportRoot)
-//                )
-//            }
             else -> return null
         }
     }
@@ -115,6 +116,17 @@ class ReviewFilterService {
             }
         }
         return orderBy
+    }
+
+
+    private fun createReportsFilter(cb: CriteriaBuilder, root: Root<Review>, query: CriteriaQuery<Any>): Predicate? {
+        // Restricts any reported Review
+        var subqueryRep: Subquery<Report> = query.subquery(Report::class.java)
+        val subquerRoot = subqueryRep.from(Report::class.java)
+        subqueryRep.distinct(true)
+                .select(subquerRoot.get("review"))
+                .where(cb.equal(subquerRoot.get<Long>("review"), root.get<Long>("id")))
+        return cb.not(cb.exists(subqueryRep))
     }
 
     private fun roundUp(num: Int, divisor: Int): Int {

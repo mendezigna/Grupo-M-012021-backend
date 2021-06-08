@@ -1,20 +1,21 @@
 package unq.edu.ar.GrupoMs12021.Resenia.service.filter
 
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Genres
+import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleType
 
 class TitleFilter {
-    val likesGT: String?
+    val likesGT: Int?
     val rating: Float?
     val decade: Int?
     val actor: String?
     val director: String?
     val titleName: String?
     val genre: Genres?
-    val titleType: String?
+    val titleType: TitleType?
     var numPage: Int
     var sizePage: Int
 
-    constructor(numPage: Int?, sizePage: Int?, titleType: String?, genre: Genres?, titleName: String?, director: String?, actor: String?, decade: Int?, rating: Float?, likesGT: String?){
+    constructor(numPage: Int?, sizePage: Int?, titleType: TitleType?, genre: Genres?, titleName: String?, director: String?, actor: String?, decade: Int?, rating: Float?, likesGT: Int?){
         this.numPage = numPage ?: 0
         this.sizePage =  sizePage ?: 15
         this.titleType = titleType

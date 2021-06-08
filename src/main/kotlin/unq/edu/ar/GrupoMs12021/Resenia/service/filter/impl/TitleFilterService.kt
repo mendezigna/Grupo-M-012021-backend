@@ -8,6 +8,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleType
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Actor
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
+import unq.edu.ar.GrupoMs12021.Resenia.service.filter.ReviewFilter
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.TitleFilter
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
@@ -26,30 +27,31 @@ class TitleFilterService {
 
         val countquery: CriteriaQuery<Long> = cb.createQuery(Long::class.java)
         val counttitleroot: Root<Title> = countquery.from(Title::class.java)
-        countquery.select(cb.countDistinct(counttitleroot)).distinct(true)
 
-        val titlequery: CriteriaQuery<Title> = cb.createQuery(Title::class.java).distinct(true)
+
+        val titlequery: CriteriaQuery<Title> = cb.createQuery(Title::class.java)
         val titleroot: Root<Title> = titlequery.from(Title::class.java)
 
-        filter.buildFilterMap().forEach { (k, v) ->
-            run {
-                // filtros Titles
-                titlequery.where(this.createPredicate(cb, titleroot, k, v)!!)
-                // filtros Count
-                countquery.where(this.createPredicate(cb, counttitleroot, k, v)!!)
-            }
-        }
+        // conditions/filters
+        titlequery.where(*buildPredicatesArray(cb,titleroot,titlequery as CriteriaQuery<Any>,filter))
+        countquery.where(*buildPredicatesArray(cb,counttitleroot,countquery as CriteriaQuery<Any>, filter ))
+
+
+        countquery.select(cb.countDistinct(counttitleroot))
+                .distinct(true)
 
         // execute total rows count
-        val resCount = em.createQuery(countquery).singleResult
+        val resCount = em.createQuery(countquery as CriteriaQuery<Long>).singleResult
         val totalPages: Int = this.roundUp(resCount.toInt(), filter.sizePage)
 
         if (filter.numPage>totalPages){
             return listOf()
         }
 
+
+        titlequery.distinct(true)
         // titles query
-        val indexedQuery = em.createQuery(titlequery)
+        val indexedQuery = em.createQuery(titlequery as CriteriaQuery<Title>)
                 .setFirstResult(filter.numPage * filter.sizePage)
                 .setMaxResults(filter.sizePage)
 
@@ -57,6 +59,14 @@ class TitleFilterService {
         return indexedQuery.resultList
     }
 
+
+    private fun buildPredicatesArray(cb: CriteriaBuilder, titleroot: Root<Title>, query: CriteriaQuery<Any>, filter: TitleFilter): Array<Predicate> {
+        var predicates: MutableList<Predicate> = mutableListOf()
+        filter.buildFilterMap().forEach { (k, v) ->
+            predicates.add(this.createPredicate(cb, titleroot, k, v)!!)
+        }
+        return predicates.toTypedArray()
+    }
 
     // Returns condition to fill Criteria
     private fun createPredicate(criteriabuilder: CriteriaBuilder, rootTitle: Root<Title>,

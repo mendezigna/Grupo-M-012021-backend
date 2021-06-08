@@ -129,8 +129,8 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
         (rev3 as PublicReview).addReport(reason)
 
         //valoraciones
-        rev4.addLike(true); rev6.addLike(true); rev8.addLike(false); //title1
-        rev5.addLike(true); rev7.addLike(true); rev7.addLike(false); //title2
+        rev4.addLike(true); rev4.addLike(true); rev4.addLike(true); rev4.addLike(true); //title1
+        rev5.addLike(true); rev5.addLike(true); rev5.addLike(false); //title2
         rev1.addLike(true) //title26
         rev2.addLike(true) //title 27
         rev10.addLike(true) //title 4
