@@ -13,6 +13,7 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import unq.edu.ar.GrupoMs12021.Resenia.model.client.Metrics
 import java.util.*
 
 
@@ -31,17 +32,17 @@ class ClientController(@Autowired private val clientService: ClientService) {
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody user : Client) : ClientDTO{
-        val userRegistered = clientService.register(user)
+    fun register(@RequestBody user : RegisterDTO) : ClientDTO{
+        val userRegistered = clientService.register(Client(user.name, user.email, user.password, null))
         val token: String = getJWTToken(userRegistered.email!!)
-        val userDTO = ClientDTO.fromModel(user)
+        val userDTO = ClientDTO.fromModel(userRegistered)
         userDTO.token = token
         return userDTO
     }
 
-    @GetMapping("/test")
-    fun test() : ResponseEntity<String> {
-        return ResponseEntity("hola", HttpStatus.OK)
+    @GetMapping("/metrics")
+    fun getMetrics(@RequestParam email : String) : Metrics {
+        return clientService.getMetrics(email)
     }
 
     private fun getJWTToken(username: String): String {
@@ -65,3 +66,5 @@ class ClientController(@Autowired private val clientService: ClientService) {
         return "Bearer $token"
     }
 }
+
+class RegisterDTO(val email: String, val password: String, val name: String)

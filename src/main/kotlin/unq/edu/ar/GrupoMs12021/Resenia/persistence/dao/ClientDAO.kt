@@ -11,4 +11,6 @@ interface ClientDAO : CrudRepository<Client, Long> {
     fun findByEmailAndPassword(email: String, password: String) : Client
 
     fun findByApyKey(apyKey: String) : Optional<Client>
+
+    fun findByEmail(email: String) : Client
 }

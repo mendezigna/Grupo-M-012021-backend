@@ -47,14 +47,14 @@ class ReviewController(private val reviewService: ReviewService) {
 
     @ApiKey
     @PostMapping("/{id}/like")
-    fun likeReview(@PathVariable id: Long): ReviewGenericDTO {
-        return this.mapper!!.toDto(this.reviewService.addLiking(id, true))
+    fun likeReview(@PathVariable id: Long, @RequestHeader("ApiKey") apiKey: String): ReviewGenericDTO {
+        return this.mapper!!.toDto(this.reviewService.addLiking(id, true, apiKey))
     }
 
     @ApiKey
     @PostMapping("/{id}/dislike")
-    fun dislikeReview(@PathVariable id: Long): ReviewGenericDTO {
-        return this.mapper!!.toDto(this.reviewService.addLiking(id, false))
+    fun dislikeReview(@PathVariable id: Long, @RequestHeader("ApiKey") apikey: String): ReviewGenericDTO {
+        return this.mapper!!.toDto(this.reviewService.addLiking(id, false, apikey))
     }
 
     @ApiKey
@@ -65,8 +65,8 @@ class ReviewController(private val reviewService: ReviewService) {
 
     @ApiKey
     @PostMapping("/title/{titleId}")
-    fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewGenericDTO): ReviewGenericDTO {
-        return this.mapper!!.toDto(this.reviewService.create(mapper!!.toEntity(reviewDTO), titleId))
+    fun create(@PathVariable titleId: String, @RequestBody reviewDTO: ReviewGenericDTO, @RequestHeader("ApiKey") apikey: String): ReviewGenericDTO {
+        return this.mapper!!.toDto(this.reviewService.create(mapper!!.toEntity(reviewDTO), titleId, apikey))
     }
 
     @ApiKey
@@ -77,8 +77,8 @@ class ReviewController(private val reviewService: ReviewService) {
 
     @ApiKey
     @PostMapping("/{id}/reports")
-    fun createReportReview(@PathVariable id: Long, @RequestBody reportDTO: ReportDTO): ReviewGenericDTO {
-        return this.mapper!!.toDto(this.reviewService.createReport(id, mapper!!.toEntity(reportDTO)))
+    fun createReportReview(@PathVariable id: Long, @RequestBody reportDTO: ReportDTO, @RequestHeader("ApiKey") apikey: String): ReviewGenericDTO {
+        return this.mapper!!.toDto(this.reviewService.createReport(id, mapper!!.toEntity(reportDTO), apikey))
     }
 
 }

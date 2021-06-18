@@ -3,7 +3,9 @@ package unq.edu.ar.GrupoMs12021.Resenia.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import unq.edu.ar.GrupoMs12021.Resenia.model.client.Client
+import unq.edu.ar.GrupoMs12021.Resenia.model.client.Metrics
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ClientDAO
+import javax.transaction.Transactional
 
 @Service
 class ClientService(@Autowired private val clientDAO : ClientDAO) {
@@ -26,5 +28,11 @@ class ClientService(@Autowired private val clientDAO : ClientDAO) {
             .map(charPool::get)
             .joinToString("")
         return randomString
+    }
+
+    @Transactional
+    fun getMetrics(email: String): Metrics {
+        val client = clientDAO.findByEmail(email)
+        return client.metrics
     }
 }

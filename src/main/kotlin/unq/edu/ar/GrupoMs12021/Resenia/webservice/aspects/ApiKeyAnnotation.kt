@@ -19,15 +19,11 @@ class ApiKeyAnnotation(@Autowired private val clientDAO: ClientDAO){
 
     @Before("@annotation(ApiKey)")
     fun checkApiKey(){
-        val apiKey = request.getHeader("ApiKey")?.replace("Token ", "")
+        val apiKey = request.getHeader("ApiKey")
         if(apiKey == null || clientDAO.findByApyKey(apiKey).isEmpty){
-            respondError("Please provide a valid Api Key")
+            respond.sendError(401, "Please provide a valid Api Key")
         }
 
-    }
-
-    private fun respondError(error : String){
-        respond.sendError(401, error)
     }
 }
 
