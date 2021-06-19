@@ -45,6 +45,11 @@ class ClientController(@Autowired private val clientService: ClientService) {
         return clientService.getMetrics(email)
     }
 
+    @PostMapping("/subscribe")
+    fun subscribe(@RequestBody subscription : SubscriptionDTO) {
+        clientService.subscribe(subscription)
+    }
+
     private fun getJWTToken(username: String): String {
         val secretKey = "secretKeyMuySecreta"
         val grantedAuthorities = AuthorityUtils
@@ -68,3 +73,5 @@ class ClientController(@Autowired private val clientService: ClientService) {
 }
 
 class RegisterDTO(val email: String, val password: String, val name: String)
+
+class SubscriptionDTO(val email: String, val url : String, val titleId : String)
