@@ -43,7 +43,7 @@ class ReviewService(private val reviewDAO: ReviewDAO,
     fun addLiking(id: Long, isLike: Boolean, apiKey: String): Review {
         var review: Review =  reviewDAO.findById(id).get()
         val client : Client = clientDAO.findByApyKey(apiKey).get()
-        client.metrics!!.addLike(isLike)
+        client.metrics.addLike(isLike)
         review.addLike(isLike)
         clientDAO.save(client)
         return this.reviewDAO.save(review)
@@ -56,7 +56,7 @@ class ReviewService(private val reviewDAO: ReviewDAO,
     fun create(review: Review, titleId: String, apiKey: String): Review {
         var title: Title = titleDAO.findByTitleId(titleId)
         val client : Client = clientDAO.findByApyKey(apiKey).get()
-        client.metrics!!.addReview()
+        client.metrics.addReview()
         // check duplic reviews
         review.setTitleReview(title)
         clientDAO.save(client)
@@ -75,11 +75,10 @@ class ReviewService(private val reviewDAO: ReviewDAO,
     fun createReport(idReview: Long, report: Report, apiKey: String): PublicReview {
         val found: Optional<Review> = this.reviewDAO.findById(idReview)
         val client : Client = clientDAO.findByApyKey(apiKey).get()
-        client.metrics!!.addReport()
         if (found.isPresent && found.get() is PublicReview ){
             val review = found.get()
             (review as PublicReview).addReport(report.reason!!)
-            client.metrics!!.addReport()
+            client.metrics.addReport()
             clientDAO.save(client)
             return this.reviewDAO.save(review)
         }else{

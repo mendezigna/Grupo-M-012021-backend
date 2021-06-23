@@ -9,12 +9,14 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleType
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.TitleFilter
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.ApiKey
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.Log
 
 @RestController
 @CrossOrigin(origins = ["*"])
 @RequestMapping("/title")
 class TitleController(@Autowired private val titleService: TitleService) {
 
+    @Log
     @ApiKey
     @GetMapping
     fun getAll(@RequestParam(required = false) numPage:Int?,
@@ -32,6 +34,7 @@ class TitleController(@Autowired private val titleService: TitleService) {
         return this.titleService.getAll(titleFilter).map { t:Title -> TitleDTO.fromModel(t) }
     }
 
+    @Log
     @ApiKey
     @GetMapping("{id}")
     fun getTitleByID(@PathVariable id: String): TitleDTO {

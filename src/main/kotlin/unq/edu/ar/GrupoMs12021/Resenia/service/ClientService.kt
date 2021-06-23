@@ -36,8 +36,8 @@ class ClientService(@Autowired private val clientDAO : ClientDAO, @Autowired pri
     }
 
     fun subscribe(subscription : SubscriptionDTO){
-        val client : Client = clientDAO.findByEmail(subscription.email)
-        val title : Title = titleDAO.findByTitleId(subscription.titleId)
+        clientDAO.findByEmail(subscription.email)
+        titleDAO.findByTitleId(subscription.titleId)
         subscriptionDAO.save(Subscription(subscription.url, subscription.titleId, subscription.email))
     }
 

@@ -14,6 +14,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import unq.edu.ar.GrupoMs12021.Resenia.model.client.Metrics
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.Log
 import java.util.*
 
 
@@ -22,6 +23,7 @@ import java.util.*
 @RequestMapping("/client")
 class ClientController(@Autowired private val clientService: ClientService) {
 
+    @Log
     @PostMapping("/login")
     fun login(@RequestParam("username") username : String, @RequestParam("password") password: String) : ClientDTO {
         val token: String = getJWTToken(username)
@@ -31,6 +33,7 @@ class ClientController(@Autowired private val clientService: ClientService) {
         return userDTO
     }
 
+    @Log
     @PostMapping("/register")
     fun register(@RequestBody user : RegisterDTO) : ClientDTO{
         val userRegistered = clientService.register(Client(user.name, user.email, user.password, null))
@@ -40,11 +43,13 @@ class ClientController(@Autowired private val clientService: ClientService) {
         return userDTO
     }
 
+    @Log
     @GetMapping("/metrics")
     fun getMetrics(@RequestParam email : String) : Metrics {
         return clientService.getMetrics(email)
     }
 
+    @Log
     @PostMapping("/subscribe")
     fun subscribe(@RequestBody subscription : SubscriptionDTO) {
         clientService.subscribe(subscription)
