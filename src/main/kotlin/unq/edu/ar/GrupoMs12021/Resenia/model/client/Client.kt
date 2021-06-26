@@ -1,5 +1,7 @@
 package unq.edu.ar.GrupoMs12021.Resenia.model.client
 
+import org.hibernate.validator.constraints.Email
+import org.jetbrains.annotations.NotNull
 import javax.persistence.*
 
 @Entity
@@ -7,6 +9,7 @@ class Client() {
 
     var name : String? = null
     @Column(unique = true)
+    @field:Email
     var email: String? = null
     var password: String? = null
     @Column(unique = true)

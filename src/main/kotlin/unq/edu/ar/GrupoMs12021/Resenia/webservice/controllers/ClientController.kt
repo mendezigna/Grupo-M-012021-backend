@@ -11,11 +11,21 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.ClientDTO
 import java.util.stream.Collectors
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.hibernate.mapping.Constraint
+import org.hibernate.validator.constraints.URL
+import org.intellij.lang.annotations.Pattern
+import org.jetbrains.annotations.NotNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry
+import org.springframework.validation.annotation.Validated
 import unq.edu.ar.GrupoMs12021.Resenia.model.client.Metrics
 import unq.edu.ar.GrupoMs12021.Resenia.webservice.aspects.Log
 import java.util.*
+import javax.swing.SpringLayout
+import javax.validation.Valid
+import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
 
 
 @RestController
