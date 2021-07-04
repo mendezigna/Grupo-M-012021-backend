@@ -16,6 +16,8 @@ open class Review {
     open var overview: String? = null
     open var description: String? = null
     open var rating: Float? = null
+//    @Basic
+//    @Temporal(TemporalType.TIMESTAMP)
     open var date: Date? = null
     open var likes: Int? = 0
     open var dislikes: Int? = 0

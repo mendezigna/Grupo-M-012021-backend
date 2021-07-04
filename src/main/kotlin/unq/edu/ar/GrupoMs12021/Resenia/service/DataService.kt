@@ -4,12 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Service
-
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.client.Client
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.Platform
-import unq.edu.ar.GrupoMs12021.Resenia.model.review.Review
-
+import unq.edu.ar.GrupoMs12021.Resenia.model.review.*
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Genres
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.TitleBasicInformation
@@ -19,12 +15,17 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Cast
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Category
 import unq.edu.ar.GrupoMs12021.Resenia.model.title.cast.Employee
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.*
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.Instant
+import java.util.*
 
 
 @Service
 class DataService(@Autowired private val titleDAO: TitleDAO,
                   @Autowired private val reviewDAO: ReviewDAO,
-                  @Autowired private val clientDAO: ClientDAO
+                  @Autowired private val clientDAO: ClientDAO,
+                  @Autowired private val cacheService: CacheService
 ) : ApplicationRunner {
 
     val cast1 = Cast("Steven Spielberg", listOf(Actor("Carmencita", listOf("Carmencita"))), listOf(Employee("Jose", Category.CINEMATOGRAPHER)))
@@ -85,6 +86,8 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
 
     var pl = Platform.Netflix
 
+//    var date_TwoHoursAgo: Date = Date.from(Instant.now().minus(Duration.ofHours(2)));
+
     var langES = "ES"
     var langEN = "EN"
 
@@ -144,6 +147,8 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
         val titles = listOf(title1,title2, title3,title4,title5,title6,title7,title8,title9,title10,title11,title12,title13,title14,title15,title16,title17,title18,title19,title20,title21,title22,title23,title24,title25, title26, title27)
         titleDAO.saveAll(titles)
         reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5, rev6, rev7, rev8, rev9, rev10))
+
+        cacheService.loadSaveAll()
 
     }
 }
