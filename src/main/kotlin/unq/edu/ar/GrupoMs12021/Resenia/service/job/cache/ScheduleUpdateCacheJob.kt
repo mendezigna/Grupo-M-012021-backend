@@ -11,35 +11,28 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.stereotype.Component
 import unq.edu.ar.GrupoMs12021.Resenia.service.CacheService
 
-@Configuration
+@Component
 class ScheduleUpdateCacheJob {
 
     val cacheService: CacheService
     var scheduler: Scheduler
 
-    constructor(@Autowired cacheService: CacheService, @Qualifier("createScheduler") @Autowired scheduler: Scheduler) {
+    constructor(@Autowired cacheService: CacheService,
+                @Qualifier("createScheduler") @Autowired scheduler: Scheduler
+    ) {
         this.scheduler = scheduler
         this.cacheService = cacheService
         setUpScheduler()
     }
-
-    @Bean
-    fun createScheduler(): Scheduler {
-        //Create & start the scheduler.
-        val factory = StdSchedulerFactory();
-        factory.initialize()
-        return factory.scheduler
-    }
-
 
     fun setUpScheduler() {
         try{
             // Cache updateCache
             var job: JobDetail = this.getJobDetail()
             var trigger = this.getTriggerFor(job)
-
             // variable necesaria para el contexto que utilizara el Job
             scheduler.getContext().put("cacheService", this.cacheService );
 
@@ -52,7 +45,7 @@ class ScheduleUpdateCacheJob {
     }
 
     private fun getTriggerFor(job: JobDetail): Trigger {
-        val schedule: String = "0 0/3 * * * ?" // cada 3 min
+        val schedule: String = "0 0/9 * * * ?" // cada 3 min
         val cron: CronScheduleBuilder = CronScheduleBuilder.cronSchedule(schedule)
         return TriggerBuilder.newTrigger()
                 .withIdentity("UpdateCache", "TitlesLite")

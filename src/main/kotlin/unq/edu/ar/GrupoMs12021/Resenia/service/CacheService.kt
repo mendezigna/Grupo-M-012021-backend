@@ -15,7 +15,7 @@ class CacheService(
     fun loadSaveAll(){
         var results: List<TitleLite> = repositoryTitleLite.getAllTitlesLite()
         results.forEach{
-//            it -> this.repositoryCache.save(this.mapToTitleLite(it))
+            it -> this.repositoryCache.save(it)
         }
     }
 
@@ -26,7 +26,7 @@ class CacheService(
     fun updateLatestHour(){
         var results: List<TitleLite> = repositoryTitleLite.getLatestHourTitles()
         results.forEach{
-//            it -> this.repositoryCache.update(this.mapToTitleLite(it))
+//            it -> this.repositoryCache.update(it)
         }
     }
 

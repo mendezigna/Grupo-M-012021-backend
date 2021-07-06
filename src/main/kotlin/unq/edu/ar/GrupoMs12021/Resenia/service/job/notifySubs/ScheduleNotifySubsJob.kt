@@ -6,18 +6,17 @@ import org.quartz.JobDetail
 import org.quartz.Scheduler
 import org.quartz.Trigger
 import org.quartz.TriggerBuilder
-import org.quartz.impl.StdSchedulerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.context.annotation.Bean
-import unq.edu.ar.GrupoMs12021.Resenia.service.CacheService
-import unq.edu.ar.GrupoMs12021.Resenia.service.job.cache.UpdateCacheJob
+import org.springframework.stereotype.Component
+import unq.edu.ar.GrupoMs12021.Resenia.service.news.titlenews.NotifyTitleNewsService
 
-class ScheduleNotifySubsJob {
-    var scheduler: Scheduler
+@Component
+class ScheduleNotifySubsJob(
+        @Autowired var notifyTitleNewsService: NotifyTitleNewsService,
+        @Qualifier("createScheduler") @Autowired var scheduler: Scheduler) {
 
-    constructor(@Autowired cacheService: CacheService, @Qualifier("createScheduler") @Autowired scheduler: Scheduler) {
-        this.scheduler = scheduler
+    init {
         setUpScheduler()
     }
 
@@ -27,7 +26,7 @@ class ScheduleNotifySubsJob {
             var trigger = this.getTriggerFor(job)
 
             // variable necesaria para el contexto que utilizara el Job
-//            scheduler.getContext().put("service", this.service );
+            scheduler.getContext().put("notifyTitleNewsService", notifyTitleNewsService );
 
             scheduler.start()
             scheduler.scheduleJob(job, trigger)
@@ -38,7 +37,7 @@ class ScheduleNotifySubsJob {
     }
 
     private fun getTriggerFor(job: JobDetail): Trigger {
-        val schedule: String = "0 0/10 * * * ?" // cada 5 min
+        val schedule: String = "0 0/2 * * * ?" //
         val cron: CronScheduleBuilder = CronScheduleBuilder.cronSchedule(schedule)
         return TriggerBuilder.newTrigger()
                 .withIdentity("NotifySubs", "Notify")
@@ -48,7 +47,7 @@ class ScheduleNotifySubsJob {
     }
 
     private fun getJobDetail(): JobDetail {
-        return JobBuilder.newJob(UpdateCacheJob::class.java)
+        return JobBuilder.newJob(NotifySubscriptorsJob::class.java)
                 .withIdentity("NotifySubs", "Notify").build()
     }
 }

@@ -6,4 +6,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.client.Subscription
 
 @Repository
 interface SubscriptionDAO : JpaRepository<Subscription, Long> {
+
+    fun findSubscriptionsByTitleId(titleId: String): List<Subscription>
+
 }

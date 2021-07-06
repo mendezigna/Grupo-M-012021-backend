@@ -148,7 +148,9 @@ class DataService(@Autowired private val titleDAO: TitleDAO,
         titleDAO.saveAll(titles)
         reviewDAO.saveAll(listOf(rev1, rev2, rev3, rev4, rev5, rev6, rev7, rev8, rev9, rev10))
 
-        cacheService.loadSaveAll()
+        //cacheService.loadSaveAll()
+        //titleNewsDAO.send("t0001")
+        //titleNewsDAO.getLast()
 
     }
 }

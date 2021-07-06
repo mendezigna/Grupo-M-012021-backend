@@ -11,6 +11,8 @@ import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ReviewDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.impl.ReviewFilterService
 import unq.edu.ar.GrupoMs12021.Resenia.service.filter.ReviewFilter
+import unq.edu.ar.GrupoMs12021.Resenia.service.news.titlenews.NewsTitleService
+import unq.edu.ar.GrupoMs12021.Resenia.service.news.titlenews.NotifyTitleNewsService
 import java.lang.RuntimeException
 import java.util.*
 
@@ -18,7 +20,8 @@ import java.util.*
 class ReviewService(private val reviewDAO: ReviewDAO,
                     private val titleDAO: TitleDAO,
                     private val filterSearch: ReviewFilterService,
-                    private val clientDAO: ClientDAO
+                    private val clientDAO: ClientDAO,
+                    private val newsTitleService: NewsTitleService
                     ) {
 
     fun getAll(filter: ReviewFilter): List<Review> {
@@ -57,10 +60,15 @@ class ReviewService(private val reviewDAO: ReviewDAO,
         var title: Title = titleDAO.findByTitleId(titleId)
         val client : Client = clientDAO.findByApyKey(apiKey).get()
         client.metrics.addReview()
-        // check duplic reviews
+
         review.setTitleReview(title)
         clientDAO.save(client)
-        return this.save(review)
+
+        // execute save
+        val entity = this.save(review)
+
+        newsTitleService.sendtoTitleNews(titleId)
+        return entity
     }
 
     fun getReports(id: Long): List<Report>? {

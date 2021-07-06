@@ -1,6 +1,7 @@
 package unq.edu.ar.GrupoMs12021.Resenia.persistence.dao
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.HashOperations
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Repository
@@ -8,14 +9,12 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleLite
 
 
 @Repository
-class TitleLiteRedisDAO {
+class TitleLiteRedisDAO(@Qualifier("redisTemplate") @Autowired private var redisTemplate: RedisTemplate<String, TitleLite>?) {
 
-    private var redisTemplate: RedisTemplate<String, TitleLite>? = null
     //HashOperations: access Redis cache
     private var hashOperations: HashOperations<String, String, TitleLite>? = null
 
-    constructor(@Autowired redisTemplate: RedisTemplate<String, TitleLite>?) {
-        this.redisTemplate = redisTemplate
+    init {
         hashOperations = this.redisTemplate!!.opsForHash()
     }
 
