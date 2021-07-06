@@ -9,7 +9,7 @@ import unq.edu.ar.GrupoMs12021.Resenia.model.title.Title
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.ClientDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.SubscriptionDAO
 import unq.edu.ar.GrupoMs12021.Resenia.persistence.dao.TitleDAO
-import unq.edu.ar.GrupoMs12021.Resenia.webservice.controllers.SubscriptionDTO
+import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.SubscriptionDTO
 import javax.transaction.Transactional
 
 @Service

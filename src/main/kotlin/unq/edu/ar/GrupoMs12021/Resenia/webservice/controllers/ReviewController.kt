@@ -18,10 +18,7 @@ import java.util.*
 @RestController
 @CrossOrigin(origins = ["*"])
 @RequestMapping("/review")
-class ReviewController(private val reviewService: ReviewService) {
-
-    @Autowired
-    var mapper: ReviewMapper? = ReviewMapper()
+class ReviewController(private val reviewService: ReviewService, @Autowired private val mapper : ReviewMapper? = ReviewMapper()) {
 
     @Log
     @ApiKey

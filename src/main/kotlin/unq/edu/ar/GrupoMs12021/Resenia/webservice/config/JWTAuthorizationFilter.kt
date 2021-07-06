@@ -2,10 +2,13 @@ package unq.edu.ar.GrupoMs12021.Resenia.webservice.config
 
 import io.jsonwebtoken.*
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.filter.OncePerRequestFilter
 import java.io.IOException
+import java.util.*
 import java.util.stream.Collectors
 import javax.servlet.FilterChain
 import javax.servlet.ServletException
@@ -73,4 +76,27 @@ class JWTAuthorizationFilter : OncePerRequestFilter() {
         val authenticationHeader = request.getHeader(HEADER)
         return !(authenticationHeader == null || !authenticationHeader.startsWith(PREFIX))
     }
+    companion object{
+        fun getJWTToken(username: String): String {
+            val secretKey = "secretKeyMuySecreta"
+            val grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER")
+            val token: String = Jwts
+                .builder()
+                .setId("JWT")
+                .setSubject(username)
+                .claim("authorities",
+                    grantedAuthorities.stream()
+                        .map { obj: GrantedAuthority -> obj.authority }
+                        .collect(Collectors.toList()))
+                .setIssuedAt(Date(System.currentTimeMillis()))
+                .setExpiration(Date(System.currentTimeMillis() + 600000))
+                .signWith(
+                    SignatureAlgorithm.HS512,
+                    secretKey.toByteArray()
+                ).compact()
+            return "Bearer $token"
+        }
+    }
+
 }
