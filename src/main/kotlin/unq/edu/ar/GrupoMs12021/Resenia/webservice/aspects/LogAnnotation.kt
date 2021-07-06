@@ -20,7 +20,7 @@ class LogExecutionTimeAspectAnnotation {
     @Around("@annotation(Log)")
     fun log(joinPoint: ProceedingJoinPoint): Any? {
         logger.info("Method: " + joinPoint.signature.toShortString())
-        logger.info("Args: " + joinPoint.args.map { it.toString() })
+        logger.info("Args: " + joinPoint.args)
         val start = System.currentTimeMillis()
         val result = joinPoint.proceed()
         val executionTime = System.currentTimeMillis() - start

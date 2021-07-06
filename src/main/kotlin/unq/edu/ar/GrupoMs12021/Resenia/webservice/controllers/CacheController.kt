@@ -13,7 +13,6 @@ import unq.edu.ar.GrupoMs12021.Resenia.webservice.dto.TitleLite
 class CacheController(@Autowired private val cacheService: CacheService) {
 
     @Log
-    @ApiKey
     @GetMapping("{titleId}")
     fun getByTitle(@PathVariable titleId: String): TitleLite? {
         return this.cacheService.getByTitle(titleId)
