@@ -45,7 +45,7 @@ class ScheduleUpdateCacheJob {
     }
 
     private fun getTriggerFor(job: JobDetail): Trigger {
-        val schedule: String = "0 0/9 * * * ?" // cada 3 min
+        val schedule: String = "0 0/3 * * * ?" // cada 3 min
         val cron: CronScheduleBuilder = CronScheduleBuilder.cronSchedule(schedule)
         return TriggerBuilder.newTrigger()
                 .withIdentity("UpdateCache", "TitlesLite")

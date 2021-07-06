@@ -15,6 +15,7 @@ class NewsTitleService(@Qualifier("getJedisClientPublisher") @Autowired val clie
     fun sendtoTitleNews(titleId: String){
         try{
             this.clientPublisher.sadd(topicTitleNews, titleId)
+            LOGGER.info("Published News to "+topicTitleNews)
         } catch (e: Exception){
           e.printStackTrace()
           LOGGER.error("Failed to publish on TitleNews -"+ titleId,e )

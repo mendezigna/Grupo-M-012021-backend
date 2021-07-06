@@ -37,7 +37,7 @@ class ScheduleNotifySubsJob(
     }
 
     private fun getTriggerFor(job: JobDetail): Trigger {
-        val schedule: String = "0 0/2 * * * ?" //
+        val schedule: String = "0 0/6 * * * ?" //
         val cron: CronScheduleBuilder = CronScheduleBuilder.cronSchedule(schedule)
         return TriggerBuilder.newTrigger()
                 .withIdentity("NotifySubs", "Notify")

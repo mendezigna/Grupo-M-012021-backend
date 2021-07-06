@@ -11,7 +11,7 @@ class NotifySubscriptorsJob: QuartzJobBean() {
     val LOGGER: Logger = org.slf4j.LoggerFactory.getLogger(NotifySubscriptorsJob::class.java)
 
     override fun executeInternal(context: JobExecutionContext) {
-        LOGGER.info("Starting notifyTitleNewsService")
+        LOGGER.info("Starting process NotifyTitleNewsService")
         this.notifyTitleNewsService = context.getScheduler().getContext().get("notifyTitleNewsService") as NotifyTitleNewsService;
 
         this.notifyTitleNewsService!!.notifySubscribersTitleNews()

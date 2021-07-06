@@ -26,6 +26,7 @@ class NotifyTitleNewsService(
     }
 
     private fun deliverNewsFrom(titleId: String){
+        LOGGER.info("Delivering news of TitleId "+titleId)
         var subs = this.getSubscribersFrom(titleId)
         subs.forEach {
             try {
