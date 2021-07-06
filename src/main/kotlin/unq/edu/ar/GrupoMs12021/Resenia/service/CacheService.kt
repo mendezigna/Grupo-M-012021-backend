@@ -26,7 +26,7 @@ class CacheService(
     fun updateLatestHour(){
         var results: List<TitleLite> = repositoryTitleLite.getLatestHourTitles()
         results.forEach{
-//            it -> this.repositoryCache.update(it)
+            it -> this.repositoryCache.update(it)
         }
     }
 
